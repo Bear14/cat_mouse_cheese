@@ -85,18 +85,16 @@ class Cat:
             print("Wait for laser_callback.")
 
         for i in range(len(self.sensor_ranges)):
-            if (self.sensor_ranges[i] < 0.7):
-                force[0] += -m.cos(self.sensor_angles[i]) * (0.7 - self.sensor_ranges[i])
             if (self.sensor_ranges[i] < 0.8):
                 force[1] += -m.sin(self.sensor_angles[i]) * (0.8 - self.sensor_ranges[i])
 
-        force[0] = (force[0] / 50) + 0.8
-        if (force[0] > 0.8):
-            force[0] = 0.8
-
         force[1] /= 24
-        if ((force[1] < 0.1) and (force[0] < 0.2)):
+        if ((force[1] > -0.1 and force[1] < 0.1)):
             force[1] *= 2
+        elif (force[1] < -0.8):
+            force[1] = -0.8
+        elif (force[1] > 0.8):
+            force[1] = 0.8
 
         return force
 
