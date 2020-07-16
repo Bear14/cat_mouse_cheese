@@ -41,18 +41,17 @@ class Cat:
         self.x_cat = odom.pose.pose.position.x
         self.y_cat = odom.pose.pose.position.y
 
-        quaternion = [odom.pose.pose.orientation.x, odom.pose.pose.orientation.y, odom.pose.pose.orientation.z,
-                      odom.pose.pose.orientation.w]
+        quaternion = [odom.pose.pose.orientation.x, odom.pose.pose.orientation.y, odom.pose.pose.orientation.z, odom.pose.pose.orientation.w]
         euler = euler_from_quaternion(quaternion)
         self.phi_cat = euler[2]
+
+        self.set_state()
 
     def mouse_odom_callback(self, odom):
         self.x_mouse = odom.pose.pose.position.x
         self.y_mouse = odom.pose.pose.position.y
 
-        self.calc_attraction_point()
-        self.update_polar()
-        self.homing()
+        self.set_state()
 
     def laser_callback(self, current_laser_scan):
         self.sensor_angles = np.arange(current_laser_scan.angle_min,
@@ -65,13 +64,13 @@ class Cat:
             self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
             self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
 
-    def update_polar(self):
+    def update_polar(self, goal_x, goal_y):
         # make sure cat_odom_callback is at least called once
         while self.x_cat is None and self.y_cat is None:
             print("Wait for cat_odom_callback.")
 
-        delta_x = self.attraction_point_x - self.x_cat
-        delta_y = self.attraction_point_y - self.y_cat
+        delta_x = goal_x - self.x_cat
+        delta_y = goal_y - self.y_cat
 
         self.roh = m.sqrt(delta_x ** 2 + delta_y ** 2)  # Distanz zum ziel
         self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat  # Winkel zum ziel
@@ -79,6 +78,9 @@ class Cat:
     def calculate_force(self):
 
         force = np.zeros(2)
+
+        while self.sensor_ranges is None and self.sensor_angles is None:
+            print("Wait for laser_callback.")
 
         for i in range(len(self.sensor_ranges)):
             if (self.sensor_ranges[i] < 0.7):
@@ -121,13 +123,30 @@ class Cat:
         out.linear.x = CONSTANT_CAT_SPEED  # k_rho_0 * self.rho # + force[0]
 
         force = self.calculate_force()
+        print(force)
 
-        out.angular.z = k_alpha_0 * self.alpha + force[1] * 4
+        out.angular.z = k_alpha_0 * self.alpha + force[1] *2
         if out.angular.z > 0.8:
             out.angular.z = 0.8
         if out.angular.z < -0.8:
             out.angular.z = -0.8
         self.cat_publisher.publish(out)
+
+    def set_state(self):
+        dist_mc = m.sqrt((self.x_mouse - self.x_cheese)**2 +  (self.y_mouse - self.y_cheese)**2)
+        dist_cc = m.sqrt((self.x_cat - self.x_cheese)**2 +  (self.y_cat - self.y_cheese)**2)
+
+
+        if dist_cc < dist_mc: #Cat naeher an chees => Mous als Ziel
+            self.update_polar(self.x_mouse, self.y_mouse)
+            print("Ziel Mous")
+        else:#Mous naeher an chees => Attraktionpoint als Ziel
+            self.calc_attraction_point()
+            self.update_polar(self.attraction_point_x, self.attraction_point_y)
+            print("Ziel Kaese")
+
+        self.homing()
+
 
 
 if __name__ == '__main__':
