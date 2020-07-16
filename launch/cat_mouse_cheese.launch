@@ -1,4 +1,5 @@
 <launch>
+  <arg name="world" default="turtlebot3_world"/>
   <arg name="model" default="burger"/>
   <arg name="first_tb3"  default="cat"/>
   <arg name="second_tb3" default="mouse"/>
@@ -14,19 +15,19 @@
   <arg name="second_tb3_y_pos" default="-1.0"/>
   <arg name="second_tb3_z_pos" default=" 0.0"/>
   <arg name="second_tb3_yaw"   default=" 1.57"/>
-  
+
   <arg name="cheese_x_pos" default="-2.0"/>
   <arg name="cheese_y_pos" default=" 1.0"/>
 
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/$(arg world).world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
-  </include>  
+  </include>
 
 
   <group ns = "$(arg first_tb3)">
@@ -36,7 +37,7 @@
       <param name="publish_frequency" type="double" value="50.0" />
       <param name="tf_prefix" value="$(arg first_tb3)" />
     </node>
-    
+
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg first_tb3) -x $(arg first_tb3_x_pos) -y $(arg first_tb3_y_pos) -z $(arg first_tb3_z_pos) -Y $(arg first_tb3_yaw) -param robot_description" />
   </group>
 
@@ -55,42 +56,42 @@
 
   <!-- set params for initialization -->
   <param name="szenario" value="szenario1"/>
-  
+
   <param name="cat_start_pos_x" value="$(arg first_tb3_x_pos)"/>
   <param name="cat_start_pos_y" value="$(arg first_tb3_y_pos)"/>
-  
+
   <param name="mouse_start_pos_x" value="$(arg second_tb3_x_pos)"/>
   <param name="mouse_start_pos_y" value="$(arg second_tb3_y_pos)"/>
-  
+
   <param name="cheese_pos_x" value="$(arg cheese_x_pos)"/>
   <param name="cheese_pos_y" value="$(arg cheese_y_pos)"/>
-  	
 
-  	
+
+
   <group ns = "cheese">
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find cat_mouse_cheese)/urdf/cheese.urdf.xacro" />
-		
+
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model cheese1 -x $(arg cheese_x_pos) -y $(arg cheese_y_pos) -param robot_description" />
-  </group> 
+  </group>
 
 
 
   <node name="cheese_pos" pkg="cat_mouse_cheese" type="cheese_pos.py" args="--screen"/>
   <node name="refree" pkg="cat_mouse_cheese" type="refree.py"/>
-  
+
   <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_mouse">
     <remap from="cmd_vel" to="mouse/cmd_vel"/>
   </node>
-  
-  
-  <arg name="node_start_delay" default="5.0" />  
-	
+
+
+  <arg name="node_start_delay" default="5.0" />
+
   <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
     <arg name="time" value="$(arg node_start_delay)" />
     <arg name="pkg" value="cat_mouse_cheese" />
     <arg name="file" value="team_cat.launch" />
     <arg name="value" value="--screen" />
-    <arg name="node_name" value="timed_team_cat" /> 
+    <arg name="node_name" value="timed_team_cat" />
   </include>
 
 
@@ -100,7 +101,7 @@
     <arg name="pkg" value="cat_mouse_cheese" />
     <arg name="file" value="team_mouse.launch" />
     <arg name="value" value="--screen"/>
-    <arg name="node_name" value="timed_team_mouse" /> 
+    <arg name="node_name" value="timed_team_mouse" />
   </include>
-  
+
 </launch>
