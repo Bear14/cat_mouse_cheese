@@ -51,6 +51,8 @@ class Cat:
         self.x_mouse = odom.pose.pose.position.x
         self.y_mouse = odom.pose.pose.position.y
 
+        #self.update_polar()
+        #self.homing()
         self.set_state()
 
     def laser_callback(self, current_laser_scan):
