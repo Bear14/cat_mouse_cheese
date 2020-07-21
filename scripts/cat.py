@@ -41,7 +41,8 @@ class Cat:
         self.x_cat = odom.pose.pose.position.x
         self.y_cat = odom.pose.pose.position.y
 
-        quaternion = [odom.pose.pose.orientation.x, odom.pose.pose.orientation.y, odom.pose.pose.orientation.z, odom.pose.pose.orientation.w]
+        quaternion = [odom.pose.pose.orientation.x, odom.pose.pose.orientation.y, odom.pose.pose.orientation.z,
+                      odom.pose.pose.orientation.w]
         euler = euler_from_quaternion(quaternion)
         self.phi_cat = euler[2]
 
@@ -51,8 +52,8 @@ class Cat:
         self.x_mouse = odom.pose.pose.position.x
         self.y_mouse = odom.pose.pose.position.y
 
-        #self.update_polar()
-        #self.homing()
+        # self.update_polar()
+        # self.homing()
         self.set_state()
 
     def laser_callback(self, current_laser_scan):
@@ -125,7 +126,7 @@ class Cat:
         force = self.calculate_force()
         print(force)
 
-        out.angular.z = k_alpha_0 * self.alpha + force[1] *2
+        out.angular.z = k_alpha_0 * self.alpha + force[1] * 2
         if out.angular.z > 0.8:
             out.angular.z = 0.8
         if out.angular.z < -0.8:
@@ -133,20 +134,18 @@ class Cat:
         self.cat_publisher.publish(out)
 
     def set_state(self):
-        dist_mc = m.sqrt((self.x_mouse - self.x_cheese)**2 +  (self.y_mouse - self.y_cheese)**2)
-        dist_cc = m.sqrt((self.x_cat - self.x_cheese)**2 +  (self.y_cat - self.y_cheese)**2)
+        dist_mc = m.sqrt((self.x_mouse - self.x_cheese) ** 2 + (self.y_mouse - self.y_cheese) ** 2)
+        dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
 
-
-        if dist_cc < dist_mc: #Cat naeher an chees => Mous als Ziel
+        if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
             self.update_polar(self.x_mouse, self.y_mouse)
             print("Ziel Mous")
-        else:#Mous naeher an chees => Attraktionpoint als Ziel
+        else:  # Mous naeher an chees => Attraktionpoint als Ziel
             self.calc_attraction_point()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
             print("Ziel Kaese")
 
         self.homing()
-
 
 
 if __name__ == '__main__':
