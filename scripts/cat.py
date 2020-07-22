@@ -52,8 +52,14 @@ class Cat:
         self.x_mouse = odom.pose.pose.position.x
         self.y_mouse = odom.pose.pose.position.y
 
-        # self.update_polar()
-        # self.homing()
+        quaternion = [odom.pose.pose.orientation.x, odom.pose.pose.orientation.y, odom.pose.pose.orientation.z,
+                       odom.pose.pose.orientation.w]
+        euler = euler_from_quaternion(quaternion)
+        self.phi_mouse = euler[2]
+        # # self.update_polar()
+        # # self.homing()
+        self.angular_mouse = odom.twist.twist.angular.z
+        self.linear_mouse = odom.twist.twist.linear.x
         self.set_state()
 
     def laser_callback(self, current_laser_scan):
@@ -63,6 +69,16 @@ class Cat:
         self.sensor_ranges = np.array(current_laser_scan.ranges)
 
     def calc_attraction_point(self):
+        # calc Vector
+        r =  1 #self.linear_mouse
+        phi = self.phi_mouse
+        x = m.cos(phi) * r
+        y = m.sin(phi) * r
+
+        self.attraction_point_x = x + self.x_mouse
+        self.attraction_point_y = y + self.y_mouse
+        #print(x,y)
+
         if self.x_mouse and self.y_mouse:
             self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
             self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
@@ -76,7 +92,18 @@ class Cat:
         delta_y = goal_y - self.y_cat
 
         self.roh = m.sqrt(delta_x ** 2 + delta_y ** 2)  # Distanz zum ziel
-        self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat  # Winkel zum ziel
+        #self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat # Winkel zum ziel #Verhindert Drehung?
+
+        buff = m.atan2(delta_y,delta_x)
+
+        if(delta_x < 0 and delta_y > 0):
+            buff = buff + m.pi
+        if(delta_x < 0 and delta_y < 0):
+            buff = buff + m.pi
+
+        self.alpha = buff - self.phi_cat
+
+        print(self.alpha, "= Tan(", delta_y,"|", delta_x,"-",self.phi_cat )
 
     def calculate_force(self):
 
@@ -104,47 +131,48 @@ class Cat:
         k_alpha_0 = 0.3
 
         # force = self.calculate_force(self.sensor_angles, self.sensor_ranges)
-
-        if np.abs(self.alpha) < 0.3:
-            if np.abs(self.rho) < 0.1:
-                # k_rho_0 = 1 * k_rho_0
-                k_alpha_0 = 1 * k_alpha_0
-            else:
-                # k_rho_0 = 1 * k_rho_0
-                k_alpha_0 = 2 * k_alpha_0
-        else:
-            if np.abs(self.rho) < 0.1:
-                # k_rho_0 = 2 * k_rho_0
-                k_alpha_0 = 2 * k_alpha_0
-            else:
-                # k_rho_0 = 0 * k_rho_0
-                k_alpha_0 = 4 * k_alpha_0
+        #
+        # if np.abs(self.alpha) < 0.3:       #winkel klein
+        #     if np.abs(self.rho) < 0.1:          #mehr drehen wenn nah dran
+        #         # k_rho_0 = 1 * k_rho_0
+        #         k_alpha_0 = 1 * k_alpha_0
+        #     else:
+        #         # k_rho_0 = 1 * k_rho_0
+        #         k_alpha_0 = 2 * k_alpha_0
+        # else:                               # winkel gros fahren wir langsamer
+        #     if np.abs(self.rho) < 0.1:
+        #         # k_rho_0 = 2 * k_rho_0
+        #         k_alpha_0 = 2 * k_alpha_0 # wenn nah dran dann mehr drehen als wenn weit weg
+        #     else:
+        #         # k_rho_0 = 0 * k_rho_0
+        #         k_alpha_0 = 4 * k_alpha_0 # wenn weit weg dann mehr drehen als wenn nah
 
         out = Twist()
         out.linear.x = CONSTANT_CAT_SPEED  # k_rho_0 * self.rho # + force[0]
 
         force = self.calculate_force()
-        print(force)
+        #print(force)
 
-        out.angular.z = k_alpha_0 * self.alpha + force[1] * 2
-        if out.angular.z > 0.8:
-            out.angular.z = 0.8
-        if out.angular.z < -0.8:
-            out.angular.z = -0.8
+        out.angular.z = k_alpha_0 * self.alpha + force[1]
+        # if out.angular.z > 0.8:
+        #     out.angular.z = 0.8
+        # if out.angular.z < -0.8:
+        #     out.angular.z = -0.8
         self.cat_publisher.publish(out)
 
     def set_state(self):
         dist_mc = m.sqrt((self.x_mouse - self.x_cheese) ** 2 + (self.y_mouse - self.y_cheese) ** 2)
         dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
 
-        if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
-            self.update_polar(self.x_mouse, self.y_mouse)
-            print("Ziel Mous")
-        else:  # Mous naeher an chees => Attraktionpoint als Ziel
-            self.calc_attraction_point()
-            self.update_polar(self.attraction_point_x, self.attraction_point_y)
-            print("Ziel Kaese")
-
+        # if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
+        #     self.update_polar(self.x_mouse, self.y_mouse)
+        #     print("Ziel Mous")
+        # else:  # Mous naeher an chees => Attraktionpoint als Ziel
+        #     self.calc_attraction_point()
+        #     self.update_polar(self.attraction_point_x, self.attraction_point_y)
+        #     print("Ziel Kaese")
+        self.calc_attraction_point()
+        self.update_polar(self.attraction_point_x, self.attraction_point_y)
         self.homing()
 
 
