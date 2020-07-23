@@ -71,7 +71,7 @@ class Cat:
     def calc_attraction_point(self):
         # calc Vector
         r =  1 #self.linear_mouse
-        phi = self.phi_mouse
+        phi = self.phi_mouse + self.angular_mouse
         x = m.cos(phi) * r
         y = m.sin(phi) * r
 
@@ -79,9 +79,9 @@ class Cat:
         self.attraction_point_y = y + self.y_mouse
         #print(x,y)
 
-        if self.x_mouse and self.y_mouse:
-            self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
-            self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
+        #if self.x_mouse and self.y_mouse:
+        #    self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
+        #    self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
 
     def update_polar(self, goal_x, goal_y):
         # make sure cat_odom_callback is at least called once
