@@ -45,6 +45,7 @@ class Cat:
                       odom.pose.pose.orientation.w]
         euler = euler_from_quaternion(quaternion)
         self.phi_cat = euler[2]
+
         self.set_state()
 
     def mouse_odom_callback(self, odom):
@@ -67,18 +68,17 @@ class Cat:
                                        current_laser_scan.angle_increment)
         self.sensor_ranges = np.array(current_laser_scan.ranges)
 
-
-    def calc_mouse_prediction(self):
-        r =  10 #self.linear_mouse
+    def calc_attraction_point(self):
+        # calc Vector
+        r =  1 #self.linear_mouse
         phi = self.phi_mouse
         x = m.cos(phi) * r
         y = m.sin(phi) * r
 
         self.attraction_point_x = x + self.x_mouse
         self.attraction_point_y = y + self.y_mouse
+        #print(x,y)
 
-
-    def calc_attraction_point(self):
         if self.x_mouse and self.y_mouse:
             self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
             self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
@@ -92,30 +92,11 @@ class Cat:
         delta_y = goal_y - self.y_cat
 
         self.roh = m.sqrt(delta_x ** 2 + delta_y ** 2)  # Distanz zum ziel
-
-        alpha = m.atan2(delta_y, delta_x)
-
-        if delta_x < 0 and delta_y >= 0:
-            alpha += m.pi
-        elif delta_x < 0 and delta_y < 0:
-            alpha -= m.pi
-
-        # if alpha < 0:
-        #     alpha += self.phi_cat
-        # if alpha > 0:
-        #     alpha -= self.phi_cat
-        #
-        # alpha = alpha % m.pi
-        alpha = alpha - self.phi_cat
-        print("alpha: ",alpha)
-        if alpha > (m.pi):
-            alpha = alpha % (m.pi)
-        if alpha < (-1*m.pi):
-            alpha = alpha % (m.pi)
-        print("alpha corrected:",alpha)
-        self.alpha = alpha# - self.phi_cat# Winkel zum ziel #Verhindert Drehung?
-
-
+        self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat # Winkel zum ziel #Verhindert Drehung?
+        if (self.alpha > m.pi):
+            self.alpha = m.pi - self.alpha
+        elif (self.alpha < -m.pi):
+            self.alpha = -m.pi - self.alpha
 
     def calculate_force(self):
 
@@ -157,19 +138,15 @@ class Cat:
         dist_mc = m.sqrt((self.x_mouse - self.x_cheese) ** 2 + (self.y_mouse - self.y_cheese) ** 2)
         dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
 
-        if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
-            self.calc_attraction_point()
-            self.update_polar(self.attraction_point_x, self.attraction_point_y)
-            print("Ziel Mous")
-        else:  # Mous naeher an chees => Attraktionpoint als Ziel
-            self.calc_attraction_point()
-            self.update_polar(self.x_cheese, self.y_cheese)
-            print("Ziel Kaese")
-
+        # if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
+        #     self.update_polar(self.x_mouse, self.y_mouse)
+        #     print("Ziel Mous")
+        # else:  # Mous naeher an chees => Attraktionpoint als Ziel
+        #     self.calc_attraction_point()
+        #     self.update_polar(self.attraction_point_x, self.attraction_point_y)
+        #     print("Ziel Kaese")
         self.calc_attraction_point()
         self.update_polar(self.attraction_point_x, self.attraction_point_y)
-
-
         self.homing()
 
 
