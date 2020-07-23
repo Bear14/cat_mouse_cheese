@@ -92,18 +92,7 @@ class Cat:
         delta_y = goal_y - self.y_cat
 
         self.roh = m.sqrt(delta_x ** 2 + delta_y ** 2)  # Distanz zum ziel
-        #self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat # Winkel zum ziel #Verhindert Drehung?
-
-        buff = m.atan2(delta_y,delta_x)
-
-        if(delta_x < 0 and delta_y > 0):
-            buff = buff + m.pi
-        if(delta_x < 0 and delta_y < 0):
-            buff = buff + m.pi
-
-        self.alpha = buff - self.phi_cat
-
-        print(self.alpha, "= Tan(", delta_y,"|", delta_x,"-",self.phi_cat )
+        self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat # Winkel zum ziel #Verhindert Drehung?
 
     def calculate_force(self):
 
@@ -127,25 +116,6 @@ class Cat:
         return force
 
     def homing(self):
-        k_rho_0 = 0.1
-        k_alpha_0 = 0.3
-
-        # force = self.calculate_force(self.sensor_angles, self.sensor_ranges)
-        #
-        # if np.abs(self.alpha) < 0.3:       #winkel klein
-        #     if np.abs(self.rho) < 0.1:          #mehr drehen wenn nah dran
-        #         # k_rho_0 = 1 * k_rho_0
-        #         k_alpha_0 = 1 * k_alpha_0
-        #     else:
-        #         # k_rho_0 = 1 * k_rho_0
-        #         k_alpha_0 = 2 * k_alpha_0
-        # else:                               # winkel gros fahren wir langsamer
-        #     if np.abs(self.rho) < 0.1:
-        #         # k_rho_0 = 2 * k_rho_0
-        #         k_alpha_0 = 2 * k_alpha_0 # wenn nah dran dann mehr drehen als wenn weit weg
-        #     else:
-        #         # k_rho_0 = 0 * k_rho_0
-        #         k_alpha_0 = 4 * k_alpha_0 # wenn weit weg dann mehr drehen als wenn nah
 
         out = Twist()
         out.linear.x = CONSTANT_CAT_SPEED  # k_rho_0 * self.rho # + force[0]
@@ -153,7 +123,7 @@ class Cat:
         force = self.calculate_force()
         #print(force)
 
-        out.angular.z = k_alpha_0 * self.alpha + force[1]
+        out.angular.z = self.alpha #+ force[1]
         # if out.angular.z > 0.8:
         #     out.angular.z = 0.8
         # if out.angular.z < -0.8:
