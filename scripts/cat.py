@@ -106,16 +106,16 @@ class Cat:
             print("Wait for laser_callback.")
 
         for i in range(len(self.sensor_ranges)):
-            if (self.sensor_ranges[i] < 0.8):
-                force[1] += -m.sin(self.sensor_angles[i]) * (0.8 - self.sensor_ranges[i])
+            if (self.sensor_ranges[i] < 0.9):
+                force[1] += -m.sin(2*self.sensor_angles[i]) * (0.9 - self.sensor_ranges[i])
 
         force[1] /= 24
         if ((force[1] > -0.1 and force[1] < 0.1)):
             force[1] *= 2
-        elif (force[1] < -0.8):
-            force[1] = -0.8
-        elif (force[1] > 0.8):
-            force[1] = 0.8
+        #elif (force[1] < -0.8):
+            #force[1] = -0.8
+        #elif (force[1] > 0.8):
+            #force[1] = 0.8
 
         return force
 
@@ -127,11 +127,11 @@ class Cat:
         force = self.calculate_force()
         #print(force)
 
-        out.angular.z = self.alpha #+ force[1]
-        # if out.angular.z > 0.8:
-        #     out.angular.z = 0.8
-        # if out.angular.z < -0.8:
-        #     out.angular.z = -0.8
+        out.angular.z = self.alpha + 3*force[1]
+        if out.angular.z > 0.8:
+            out.angular.z = 0.8
+        if out.angular.z < -0.8:
+            out.angular.z = -0.8
         self.cat_publisher.publish(out)
 
     def set_state(self):
