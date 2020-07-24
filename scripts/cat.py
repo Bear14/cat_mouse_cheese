@@ -68,9 +68,14 @@ class Cat:
                                        current_laser_scan.angle_increment)
         self.sensor_ranges = np.array(current_laser_scan.ranges)
 
+    def distance(self,_x,_y,_x2,_y2):
+        return m.sqrt((_x - _x2) ** 2 + (_y - _y2) ** 2)
+
     def calc_attraction_point(self):
         # calc Vector
-        r =  1 #self.linear_mouse
+        distMouseCat = self.distance(self.x_mouse,self.y_mouse,self.x_cat,self.y_cat)
+
+        r =  0.18 * ((-1)* distMouseCat + 5) #self.linear_mouse
         phi = self.phi_mouse + self.angular_mouse
         x = m.cos(phi) * r
         y = m.sin(phi) * r
@@ -135,18 +140,18 @@ class Cat:
         self.cat_publisher.publish(out)
 
     def set_state(self):
-        dist_mc = m.sqrt((self.x_mouse - self.x_cheese) ** 2 + (self.y_mouse - self.y_cheese) ** 2)
+        dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
         dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
 
-        # if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
-        #     self.update_polar(self.x_mouse, self.y_mouse)
-        #     print("Ziel Mous")
-        # else:  # Mous naeher an chees => Attraktionpoint als Ziel
-        #     self.calc_attraction_point()
-        #     self.update_polar(self.attraction_point_x, self.attraction_point_y)
-        #     print("Ziel Kaese")
-        self.calc_attraction_point()
-        self.update_polar(self.attraction_point_x, self.attraction_point_y)
+        if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
+            self.calc_attraction_point()
+            self.update_polar(self.attraction_point_x, self.attraction_point_y)
+            print("Ziel Mous")
+        else:  # Mous naeher an chees => Attraktionpoint als Ziel
+            self.update_polar(self.x_cheese, self.y_cheese)
+            print("Ziel Kaese")
+        # self.calc_attraction_point()
+        # self.update_polar(self.attraction_point_x, self.attraction_point_y)
         self.homing()
 
 
