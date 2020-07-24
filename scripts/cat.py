@@ -11,7 +11,7 @@ from tf.transformations import euler_from_quaternion
 CHEESE_INTEREST_FACTOR = 0.5
 CONSTANT_CAT_SPEED = 0.22
 MAX_TURNING_FACTOR = 1
-GOAL_RADIUS = 0.5
+GOAL_RADIUS = 0.7
 
 
 class Cat:
@@ -78,8 +78,12 @@ class Cat:
     def calc_preditction_mouse(self):
         # calc Vector
         distMouseCat = self.distance(self.x_mouse,self.y_mouse,self.x_cat,self.y_cat)
+        if distMouseCat < 1:
+            r = 0.18
+        else:
+            r = 0.18 * ((-1) * distMouseCat + 5) #self.linear_mouse
 
-        r =  0.18 * ((-1)* distMouseCat + 5) #self.linear_mouse
+
         phi = self.phi_mouse + self.angular_mouse
         x = m.cos(phi) * r
         y = m.sin(phi) * r
