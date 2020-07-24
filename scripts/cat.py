@@ -11,6 +11,7 @@ from tf.transformations import euler_from_quaternion
 CHEESE_INTEREST_FACTOR = 0.5
 CONSTANT_CAT_SPEED = 0.22
 MAX_TURNING_FACTOR = 1
+GOAL_RADIUS = 0.5
 
 
 class Cat:
@@ -25,6 +26,9 @@ class Cat:
         self.attraction_point_y = None
         self.sensor_angles = None
         self.sensor_ranges = None
+
+        self.state = "cheese"
+
 
         self.rho = 1
         self.alpha = 1
@@ -71,7 +75,7 @@ class Cat:
     def distance(self,_x,_y,_x2,_y2):
         return m.sqrt((_x - _x2) ** 2 + (_y - _y2) ** 2)
 
-    def calc_attraction_point(self):
+    def calc_preditction_mouse(self):
         # calc Vector
         distMouseCat = self.distance(self.x_mouse,self.y_mouse,self.x_cat,self.y_cat)
 
@@ -87,6 +91,10 @@ class Cat:
         #if self.x_mouse and self.y_mouse:
         #    self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
         #    self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
+    def calc_mid_point(self):
+        self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
+        self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
+
 
     def update_polar(self, goal_x, goal_y):
         # make sure cat_odom_callback is at least called once
@@ -140,18 +148,38 @@ class Cat:
         self.cat_publisher.publish(out)
 
     def set_state(self):
-        dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
-        dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
 
-        if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
-            self.calc_attraction_point()
-            self.update_polar(self.attraction_point_x, self.attraction_point_y)
-            print("Ziel Mous")
-        else:  # Mous naeher an chees => Attraktionpoint als Ziel
+        print(self.state)
+        if self.state == "cheese":
             self.update_polar(self.x_cheese, self.y_cheese)
-            print("Ziel Kaese")
-        # self.calc_attraction_point()
-        # self.update_polar(self.attraction_point_x, self.attraction_point_y)
+            if self.distance(self.x_cheese,self.y_cheese,self.x_cat,self.y_cat) < GOAL_RADIUS:
+                self.state = "mid"
+        elif self.state == "mid":
+            self.calc_mid_point()
+            self.update_polar(self.attraction_point_x, self.attraction_point_y)
+            if self.distance(self.attraction_point_x,self.attraction_point_y,self.x_cat,self.y_cat) < GOAL_RADIUS:
+                self.state = "hunt"
+        elif self.state == "hunt":
+            self.calc_preditction_mouse()
+            self.update_polar(self.attraction_point_x, self.attraction_point_y)
+            dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
+            dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
+            if dist_cc > dist_mc:
+                self.state = "cheese"
+
+        #
+        # dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
+        # dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
+        #
+        # if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
+        #     self.calc_preditction_mouse()
+        #     self.update_polar(self.attraction_point_x, self.attraction_point_y)
+        #     print("Ziel Mous")
+        # else:  # Mous naeher an chees => Attraktionpoint als Ziel
+        #     self.update_polar(self.x_cheese, self.y_cheese)
+        #     print("Ziel Kaese")
+        # # self.calc_attraction_point()
+        # # self.update_polar(self.attraction_point_x, self.attraction_point_y)
         self.homing()
 
 
