@@ -182,7 +182,7 @@ class Cat:
             self.calc_preditction_mouse()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
             dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
-            dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
+            dist_cc = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
             if dist_cc > dist_mc:
                 self.state = "cheese"
 
