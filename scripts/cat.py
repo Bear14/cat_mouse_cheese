@@ -123,7 +123,7 @@ class Cat:
         #force Manipulatoren
         rel_phi = 90 #ganzzahlig und positiv
         rel_range = 0.8
-        a = 16
+        a = 14
         b = 0.1
         #mouse ignorieren
         size_mouse = 1.4
@@ -133,7 +133,7 @@ class Cat:
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
 
-        for i in range(-rel_phi, rel_phi+1):    
+        for i in range(-rel_phi, rel_phi+1):
             if (self.sensor_ranges[i] < rel_range):
                 force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
 
