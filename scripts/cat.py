@@ -120,21 +120,26 @@ class Cat:
             self.alpha = -m.pi - self.alpha
 
     def calculate_force(self):
+        #force Manipulatoren
+        rel_phi = 90 #ganzzahlig und positiv
+        rel_range = 0.8
+        a = 16
+        b = 0.1
+        #mouse ignorieren
+        size_mouse = 1.4
 
         force = np.zeros(2)
 
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
 
-        for i in range(90):
-            if (self.sensor_ranges[i] < 0.8):
-                force[1] += -m.sin(2*self.sensor_angles[i]) * (0.5 - self.sensor_ranges[i])
-            if (self.sensor_ranges[-i] < 0.8):
-                force[1] += -m.sin(2*self.sensor_angles[-i]) * (0.5 - self.sensor_ranges[-i])
+        for i in range(-rel_phi, rel_phi+1):    
+            if (self.sensor_ranges[i] < rel_range):
+                force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
 
-        force[1] /= 36
-        if ((force[1] > -0.1 and force[1] < 0.1)):
-            force[1] *= 2
+        force[1] /= a
+        # if ((force[1] > -b and force[1] < b)):
+        #     force[1] *= 2
         #elif (force[1] < -0.8):
             #force[1] = -0.8
         #elif (force[1] > 0.8):
@@ -150,11 +155,11 @@ class Cat:
         force = self.calculate_force()
         #print(force)
 
-        if self.distance(self.x_cat,self.y_cat,self.x_mouse,self.y_mouse) < 1:
-            force[1] = 0
+        # if self.distance(self.x_cat,self.y_cat,self.x_mouse,self.y_mouse) < 1:
+        #     force[1] = 0
 
 
-        out.angular.z = self.alpha + 3*force[1]
+        out.angular.z = self.alpha + force[1]
         if out.angular.z > 0.8:
             out.angular.z = 0.8
         if out.angular.z < -0.8:
