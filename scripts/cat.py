@@ -132,10 +132,19 @@ class Cat:
 
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
-
+            
+        delta_x = self.x_cheese - self.x_cat
+        delta_y = self.y_cheese - self.y_cat
+        dist = m.sqrt(delta_x ** 2 + delta_y ** 2)
+        angle = m.atan2(delta_y, delta_x) - self.phi_cat
+        
+        if (dist < rel_range):
+            force[1] += -m.sin(2*angle) * (rel_range - dist)
+        
         for i in range(-rel_phi, rel_phi+1):
             if (self.sensor_ranges[i] < rel_range):
                 force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+            
 
         force[1] /= a
         # if ((force[1] > -b and force[1] < b)):
