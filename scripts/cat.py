@@ -139,9 +139,10 @@ class Cat:
         angle = m.atan2(delta_y, delta_x) - self.phi_cat
         
         if (dist < rel_range):
-            force[1] += -m.sin(2*(angle-0.1)) * (rel_range - dist - 0.05)
+            force[1] += -m.sin(2*(angle-1)) * (rel_range - dist - 0.05)
             force[1] += -m.sin(2*angle) * (rel_range - dist)
-            force[1] += -m.sin(2*(angle+0.5)) * (rel_range - dist - 0.05)
+            force[1] += -m.sin(2*(angle+1)) * (rel_range - dist - 0.05)
+            force[1] *= 5
         
         for i in range(-rel_phi, rel_phi+1):
             if (self.sensor_ranges[i] < rel_range):
