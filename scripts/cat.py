@@ -27,7 +27,7 @@ class Cat:
         self.sensor_angles = None
         self.sensor_ranges = None
 
-        self.state = "cheese"
+        self.state = "mid"
 
 
         self.rho = 1
@@ -132,17 +132,6 @@ class Cat:
 
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
-            
-        delta_x = self.x_cheese - self.x_cat
-        delta_y = self.y_cheese - self.y_cat
-        dist = m.sqrt(delta_x ** 2 + delta_y ** 2)
-        angle = m.atan2(delta_y, delta_x) - self.phi_cat
-        
-        if (dist < rel_range):
-            force[1] += -m.sin(2*(angle-1)) * (rel_range - dist - 0.05)
-            force[1] += -m.sin(2*angle) * (rel_range - dist)
-            force[1] += -m.sin(2*(angle+1)) * (rel_range - dist - 0.05)
-            force[1] *= 5
         
         for i in range(-rel_phi, rel_phi+1):
             if (self.sensor_ranges[i] < rel_range):
@@ -181,6 +170,7 @@ class Cat:
     def set_state(self):
 
         print(self.state)
+        dist_cat_mouse = self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)
         if self.state == "cheese":
             self.update_polar(self.x_cheese, self.y_cheese)
             if self.distance(self.x_cheese,self.y_cheese,self.x_cat,self.y_cat) < GOAL_RADIUS:
@@ -197,6 +187,8 @@ class Cat:
             dist_cc = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
             if dist_cc > dist_mc:
                 self.state = "cheese"
+        if (dist_cat_mouse < GOAL_RADIUS):
+            self.state = "hunt"
 
         #
         # dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
