@@ -75,15 +75,19 @@ class Cat:
     def distance(self,_x,_y,_x2,_y2):
         return m.sqrt((_x - _x2) ** 2 + (_y - _y2) ** 2)
 
+    def huntingFactor(self,x):
+        return 2/x - 2/(x**3) + 0.8
+
+
     def calc_preditction_mouse(self):
         # calc Vector
         distMouseCat = self.distance(self.x_mouse,self.y_mouse,self.x_cat,self.y_cat)
-        if distMouseCat < 1:
-            r = 0.18
-        else:
-            r = 0.18 * ((-1) * distMouseCat + 5) #self.linear_mouse
 
 
+        r = 0.18 * self.huntingFactor(distMouseCat)
+        if r < 0:
+            r = 0
+        #print(r)
         phi = self.phi_mouse + self.angular_mouse
         x = m.cos(phi) * r
         y = m.sin(phi) * r
@@ -122,18 +126,20 @@ class Cat:
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
 
-        for i in range(len(self.sensor_ranges)):
+        for i in range(90):
             if (self.sensor_ranges[i] < 0.8):
-                force[1] += -m.sin(2*self.sensor_angles[i]) * (0.8 - self.sensor_ranges[i])
+                force[1] += -m.sin(2*self.sensor_angles[i]) * (0.5 - self.sensor_ranges[i])
+            if (self.sensor_ranges[-i] < 0.8):
+                force[1] += -m.sin(2*self.sensor_angles[-i]) * (0.5 - self.sensor_ranges[-i])
 
-        force[1] /= 24
+        force[1] /= 36
         if ((force[1] > -0.1 and force[1] < 0.1)):
             force[1] *= 2
         #elif (force[1] < -0.8):
             #force[1] = -0.8
         #elif (force[1] > 0.8):
             #force[1] = 0.8
-
+        print(force)
         return force
 
     def homing(self):
@@ -143,6 +149,10 @@ class Cat:
 
         force = self.calculate_force()
         #print(force)
+
+        if self.distance(self.x_cat,self.y_cat,self.x_mouse,self.y_mouse) < 1:
+            force[1] = 0
+
 
         out.angular.z = self.alpha + 3*force[1]
         if out.angular.z > 0.8:
