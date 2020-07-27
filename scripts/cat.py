@@ -121,22 +121,52 @@ class Cat:
 
     def calculate_force(self):
         #force Manipulatoren
-        rel_phi = 90 #ganzzahlig und positiv
+        rel_phi = 110 #ganzzahlig und positiv
         rel_range = 0.8
         a = 14
         b = 0.1
         #mouse ignorieren
-        size_mouse = 1.4
+        size_mouse = 0.7
+        scam_angle_increment=0.0175019223243
 
         force = np.zeros(2)
 
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
-        
-        for i in range(-rel_phi, rel_phi+1):
-            if (self.sensor_ranges[i] < rel_range):
-                force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
-            
+
+        if (self.state == "hunt" and self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse) <= rel_range): # jagt und Mosu in sensorreichweite
+            delta_x = self.x_mouse- self.x_cat
+            delta_y = self.y_mouse - self.y_cat
+
+            angle_mous = m.atan2(delta_y, delta_x) - self.phi_cat
+
+            scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
+            scan_mous_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
+            border_l = ((scan_mous_middle+scan_mous_border)+2*m.pi)%(2*m.pi)
+            border_r = ((scan_mous_middle-scan_mous_border)+2*m.pi)%(2*m.pi)
+
+            print("Mous in Scanreichweite.")
+            print("Ignor sensor_angles ",border_l, " bis ", border_r)
+
+            for i in range(-rel_phi, rel_phi+1):
+                if (self.sensor_ranges[i] < rel_range):
+                    if(border_l < border_r): # geht ueber 0gard
+                        if( border_l <= self.sensor_angles[i]):
+                            pass
+                        elif( border_r >= self.sensor_angles[i]):
+                            pass
+                        else:
+                            force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+                    else:
+                        if( border_l > self.sensor_angles[i] > border_r ):
+                            pass
+                        else:
+                            force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+        else:
+            for i in range(-rel_phi, rel_phi+1):
+                if (self.sensor_ranges[i] < rel_range):
+                    force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+
 
         force[1] /= a
         # if ((force[1] > -b and force[1] < b)):
@@ -145,7 +175,7 @@ class Cat:
             #force[1] = -0.8
         #elif (force[1] > 0.8):
             #force[1] = 0.8
-        print(force)
+        #print(force)
         return force
 
     def homing(self):
