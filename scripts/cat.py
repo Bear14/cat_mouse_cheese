@@ -127,7 +127,7 @@ class Cat:
         b = 0.1
         #mouse ignorieren
         size_mouse = 0.7
-        scam_angle_increment=0.0175019223243
+        scan_angle_increment = 0.0175019223243
 
         force = np.zeros(2)
 
@@ -140,8 +140,8 @@ class Cat:
 
             angle_mouse = m.atan2(delta_y, delta_x) - self.phi_cat
 
-            scan_mouse_middle = round(((angle_mouse)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
-            scan_mouse_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
+            scan_mouse_middle = round(((angle_mouse)+2*m.pi)%(2*m.pi)/scan_angle_increment)*scan_angle_increment
+            scan_mouse_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scan_angle_increment)*scan_angle_increment
             border_l = ((scan_mouse_middle+scan_mouse_border)+2*m.pi)%(2*m.pi)
             border_r = ((scan_mouse_middle-scan_mouse_border)+2*m.pi)%(2*m.pi)
 
