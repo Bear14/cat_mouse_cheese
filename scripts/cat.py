@@ -138,15 +138,15 @@ class Cat:
             delta_x = self.x_mouse- self.x_cat
             delta_y = self.y_mouse - self.y_cat
 
-            angle_mous = m.atan2(delta_y, delta_x) - self.phi_cat
+            angle_mouse = m.atan2(delta_y, delta_x) - self.phi_cat
 
-            scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
-            scan_mous_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
-            border_l = ((scan_mous_middle+scan_mous_border)+2*m.pi)%(2*m.pi)
-            border_r = ((scan_mous_middle-scan_mous_border)+2*m.pi)%(2*m.pi)
+            scan_mouse_middle = round(((angle_mouse)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
+            scan_mouse_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
+            border_l = ((scan_mouse_middle+scan_mouse_border)+2*m.pi)%(2*m.pi)
+            border_r = ((scan_mouse_middle-scan_mouse_border)+2*m.pi)%(2*m.pi)
 
-            print("Mous in Scanreichweite.")
-            print("Ignor sensor_angles ",border_l, " bis ", border_r)
+            print("Mouse in Scanreichweite.")
+            print("Ignore sensor_angles ",border_l, " bis ", border_r)
 
             for i in range(-rel_phi, rel_phi+1):
                 if (self.sensor_ranges[i] < rel_range):
