@@ -189,7 +189,7 @@ class Cat:
         #     force[1] = 0
 
 
-        out.angular.z = self.alpha + force[1]
+        out.angular.z = self.alpha + 3*force[1]
         if out.angular.z > 0.8:
             out.angular.z = 0.8
         if out.angular.z < -0.8:
@@ -201,6 +201,8 @@ class Cat:
 
         print(self.state)
         dist_cat_mouse = self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)
+        dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
+        dist_cc = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
         if self.state == "cheese":
             self.update_polar(self.x_cheese, self.y_cheese)
             if self.distance(self.x_cheese,self.y_cheese,self.x_cat,self.y_cat) < GOAL_RADIUS:
@@ -213,11 +215,9 @@ class Cat:
         elif self.state == "hunt":
             self.calc_preditction_mouse()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
-            dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
-            dist_cc = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
             if dist_cc > dist_mc:
                 self.state = "cheese"
-        if (dist_cat_mouse < GOAL_RADIUS):
+        if (dist_cat_mouse < 0.9 and dist_mc > 2):
             self.state = "hunt"
 
         #
