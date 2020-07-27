@@ -218,6 +218,7 @@ class Cat:
             if dist_cc > dist_mc:
                 self.state = "cheese"
         if (dist_cat_mouse < 0.9 and dist_mc > 2):
+            self.update_polar(self.x_mouse, self.y_mouse)
             self.state = "hunt"
 
         #
