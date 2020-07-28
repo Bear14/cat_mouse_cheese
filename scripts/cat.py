@@ -133,7 +133,7 @@ class Cat:
             print("Wait for laser_callback.")
 
         rad_cheese = m.sqrt(2*0.1**2) #radius Mous
-        scam_angle_increment=0.0175019223243
+        scan_angle_increment=0.0175019223243
         
         distance_cat_mouse = self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)
         
@@ -144,15 +144,15 @@ class Cat:
 
             angle_mous = m.atan2(delta_y, delta_x) - self.phi_cat
 
-            scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
-            scan_mous_border = round(m.atan2(size_mouse, distance_cat_mouse)/scam_angle_increment)*scam_angle_increment
+            scan_mouse_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scan_angle_increment)*scan_angle_increment
+            scan_mouse_border = round(m.atan2(size_mouse, distance_cat_mouse)/scan_angle_increment)*scan_angle_increment
 
-            border__mouse_l = abs(scan_mous_middle+scan_mous_border)%(2*m.pi)
+            border__mouse_l = abs(scan_mouse_middle+scan_mouse_border)%(2*m.pi)
 
-            border__mouse_r = abs(scan_mous_middle-scan_mous_border)%(2*m.pi)
+            border__mouse_r = abs(scan_mouse_middle-scan_mouse_border)%(2*m.pi)
 
-            print("Mous in Scanreichweite.")
-            print("Ignor sensor_angles ",border__mouse_l, " bis ", border__mouse_r)
+            print("Mouse in Scanreichweite.")
+            print("Ignore sensor_angles ",border__mouse_l, " bis ", border__mouse_r)
 
             for i in range(-rel_phi, rel_phi+1):
                 print("I",i ," = ", self.sensor_angles[i], " R = ", self.sensor_ranges[i] )
@@ -183,8 +183,8 @@ class Cat:
 
             angular_cheese = m.atan2(delta_y, delta_x) - self.phi_cat
 
-            scan_cheese_middle = round(((angular_cheese)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
-            scan_cheese_border = round(m.atan2(rad_cheese, distance_cheese )/scam_angle_increment)*scam_angle_increment
+            scan_cheese_middle = round(((angular_cheese)+2*m.pi)%(2*m.pi)/scan_angle_increment)*scan_angle_increment
+            scan_cheese_border = round(m.atan2(rad_cheese, distance_cheese )/scan_angle_increment)*scan_angle_increment
             border_cheese_l = ((scan_cheese_middle+scan_cheese_border)+2*m.pi)%(2*m.pi)
             border_cheese_r = ((scan_cheese_middle-scan_cheese_border)+2*m.pi)%(2*m.pi)
 
