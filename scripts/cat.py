@@ -134,16 +134,18 @@ class Cat:
 
         rad_cheese = m.sqrt(2*0.1**2) #radius Mous
         scam_angle_increment=0.0175019223243
-
+        
+        distance_cat_mouse = self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)
+        
         #Mouse rausrechnen
-        if (self.state == "hunt" and self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)*size_mouse <= rel_range): # jagt und Mosu in sensorreichweite
+        if (self.state == "hunt" and distance_cat_mouse*size_mouse <= rel_range): # jagt und Mosu in sensorreichweite
             delta_x = self.x_mouse- self.x_cat
             delta_y = self.y_mouse - self.y_cat
 
             angle_mous = m.atan2(delta_y, delta_x) - self.phi_cat
 
             scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
-            scan_mous_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
+            scan_mous_border = round(m.atan2(size_mouse, distance_cat_mouse)/scam_angle_increment)*scam_angle_increment
 
             border__mouse_l = abs(scan_mous_middle+scan_mous_border)%(2*m.pi)
 
