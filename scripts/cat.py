@@ -136,7 +136,7 @@ class Cat:
         scam_angle_increment=0.0175019223243
 
         #Mouse rausrechnen
-        if (self.state == "hunt" and self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse) <= rel_range): # jagt und Mosu in sensorreichweite
+        if (self.state == "hunt" and self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)*size_mouse <= rel_range): # jagt und Mosu in sensorreichweite
             delta_x = self.x_mouse- self.x_cat
             delta_y = self.y_mouse - self.y_cat
 
@@ -144,22 +144,33 @@ class Cat:
 
             scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
             scan_mous_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
-            border__mouse_l = ((scan_mous_middle+scan_mous_border)+2*m.pi)%(2*m.pi)
-            border__mouse_r = ((scan_mous_middle-scan_mous_border)+2*m.pi)%(2*m.pi)
+
+            border__mouse_l = abs(scan_mous_middle+scan_mous_border)
+
+            border__mouse_r = abs(scan_mous_middle-scan_mous_border)
 
             print("Mous in Scanreichweite.")
             print("Ignor sensor_angles ",border__mouse_l, " bis ", border__mouse_r)
 
             for i in range(-rel_phi, rel_phi+1):
-                if (self.sensor_ranges[i] < rel_range):
-                    if(border__mouse_l < border__mouse_r): # geht ueber 0gard
-                        if( self.sensor_angles[i] <= border__mouse_l):
-                            self.sensor_ranges[i] = 0
-                        elif( self.sensor_angles[i] >= border__mouse_r):
-                            self.sensor_ranges[i] = 0
-                    else:
-                        if( border__mouse_l > self.sensor_angles[i] > border__mouse_r ):
-                            self.sensor_ranges[i] = 0
+                print("I",i ," = ", self.sensor_angles[i], " R = ", self.sensor_ranges[i] )
+
+                if(border__mouse_l < border__mouse_r): # geht ueber 0gard
+                    print("A")
+                    print("Winkel", self.sensor_angles[i])
+                    if( self.sensor_angles[i] <= border__mouse_l):
+                        print("Left")
+                        print("Winkel", self.sensor_angles[i], "=0")
+                        self.sensor_ranges[i] = np.inf
+                    elif( self.sensor_angles[i] >= border__mouse_r):
+                        print("right")
+                        print("Winkel", self.sensor_angles[i], "=0")
+                        self.sensor_ranges[i] = np.inf
+                else:
+                    print("B")
+                    if( border__mouse_l >= self.sensor_angles[i] and self.sensor_angles[i]  >= border__mouse_r ):
+                        print("Winkel", self.sensor_angles[i], "=0")
+                        self.sensor_ranges[i] = np.inf
 
 
         distance_cheese = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
