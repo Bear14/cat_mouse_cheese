@@ -12,6 +12,7 @@ CHEESE_INTEREST_FACTOR = 0.5
 CONSTANT_CAT_SPEED = 0.22
 MAX_TURNING_FACTOR = 1
 GOAL_RADIUS = 0.7
+HUNT_RADIUS = 0.862
 
 
 class Cat:
@@ -27,8 +28,7 @@ class Cat:
         self.sensor_angles = None
         self.sensor_ranges = None
 
-        self.state = "mid"
-
+        self.state = "cheese"
 
         self.rho = 1
         self.alpha = 1
@@ -57,7 +57,7 @@ class Cat:
         self.y_mouse = odom.pose.pose.position.y
 
         quaternion = [odom.pose.pose.orientation.x, odom.pose.pose.orientation.y, odom.pose.pose.orientation.z,
-                       odom.pose.pose.orientation.w]
+                      odom.pose.pose.orientation.w]
         euler = euler_from_quaternion(quaternion)
         self.phi_mouse = euler[2]
         # # self.update_polar()
@@ -72,37 +72,35 @@ class Cat:
                                        current_laser_scan.angle_increment)
         self.sensor_ranges = np.array(current_laser_scan.ranges)
 
-    def distance(self,_x,_y,_x2,_y2):
+    def distance(self, _x, _y, _x2, _y2):
         return m.sqrt((_x - _x2) ** 2 + (_y - _y2) ** 2)
 
-    def huntingFactor(self,x):
-        return 2/x - 2/(x**3) + 0.8
-
+    def huntingFactor(self, x):
+        return 2 / x - 2 / (x ** 3) + 0.8
 
     def calc_preditction_mouse(self):
         # calc Vector
-        distMouseCat = self.distance(self.x_mouse,self.y_mouse,self.x_cat,self.y_cat)
+        distance_mouse_cat = self.distance(self.x_mouse, self.y_mouse, self.x_cat, self.y_cat)
 
-
-        r = 0.18 * self.huntingFactor(distMouseCat)
+        r = 0.18 * self.huntingFactor(distance_mouse_cat)
         if r < 0:
             r = 0
-        #print(r)
+        # print(r)
         phi = self.phi_mouse + self.angular_mouse
         x = m.cos(phi) * r
         y = m.sin(phi) * r
 
         self.attraction_point_x = x + self.x_mouse
         self.attraction_point_y = y + self.y_mouse
-        #print(x,y)
+        # print(x,y)
 
-        #if self.x_mouse and self.y_mouse:
+        # if self.x_mouse and self.y_mouse:
         #    self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
         #    self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
+
     def calc_mid_point(self):
         self.attraction_point_x = (self.x_mouse + self.x_cheese) * 0.5
         self.attraction_point_y = (self.y_mouse + self.y_cheese) * 0.5
-
 
     def update_polar(self, goal_x, goal_y):
         # make sure cat_odom_callback is at least called once
@@ -113,38 +111,37 @@ class Cat:
         delta_y = goal_y - self.y_cat
 
         self.roh = m.sqrt(delta_x ** 2 + delta_y ** 2)  # Distanz zum ziel
-        self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat # Winkel zum ziel #Verhindert Drehung?
+        self.alpha = m.atan2(delta_y, delta_x) - self.phi_cat  # Winkel zum ziel #Verhindert Drehung?
         if (self.alpha > m.pi):
             self.alpha = m.pi - self.alpha
         elif (self.alpha < -m.pi):
             self.alpha = -m.pi - self.alpha
 
     def calculate_force(self):
-        #force Manipulatoren
-        rel_phi = 90 #ganzzahlig und positiv
+        # force Manipulatoren
+        rel_phi = 90  # ganzzahlig und positiv
         rel_range = 0.8
         a = 14
         b = 0.1
-        #mouse ignorieren
+        # mouse ignorieren
         size_mouse = 1.4
 
         force = np.zeros(2)
 
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
-        
-        for i in range(-rel_phi, rel_phi+1):
+
+        for i in range(-rel_phi, rel_phi + 1):
             if (self.sensor_ranges[i] < rel_range):
-                force[1] += -m.sin(2*self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
-            
+                force[1] += -m.sin(2 * self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
 
         force[1] /= a
         # if ((force[1] > -b and force[1] < b)):
         #     force[1] *= 2
-        #elif (force[1] < -0.8):
-            #force[1] = -0.8
-        #elif (force[1] > 0.8):
-            #force[1] = 0.8
+        # elif (force[1] < -0.8):
+        # force[1] = -0.8
+        # elif (force[1] > 0.8):
+        # force[1] = 0.8
         print(force)
         return force
 
@@ -154,11 +151,10 @@ class Cat:
         out.linear.x = CONSTANT_CAT_SPEED  # k_rho_0 * self.rho # + force[0]
 
         force = self.calculate_force()
-        #print(force)
+        # print(force)
 
         # if self.distance(self.x_cat,self.y_cat,self.x_mouse,self.y_mouse) < 1:
         #     force[1] = 0
-
 
         out.angular.z = self.alpha + force[1]
         if out.angular.z > 0.8:
@@ -170,25 +166,26 @@ class Cat:
     def set_state(self):
 
         print(self.state)
-        dist_cat_mouse = self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)
         if self.state == "cheese":
             self.update_polar(self.x_cheese, self.y_cheese)
-            if self.distance(self.x_cheese,self.y_cheese,self.x_cat,self.y_cat) < GOAL_RADIUS:
+            if self.distance(self.x_cheese, self.y_cheese, self.x_cat, self.y_cat) < GOAL_RADIUS:
                 self.state = "mid"
+            if self.distance(self.x_mouse, self.y_mouse, self.x_cat, self.y_cat) < HUNT_RADIUS:
+                self.state = "hunt"
         elif self.state == "mid":
             self.calc_mid_point()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
-            if self.distance(self.attraction_point_x,self.attraction_point_y,self.x_cat,self.y_cat) < GOAL_RADIUS:
+            if self.distance(self.attraction_point_x, self.attraction_point_y, self.x_cat, self.y_cat) < GOAL_RADIUS:
+                self.state = "hunt"
+            if self.distance(self.x_mouse, self.y_mouse, self.x_cat, self.y_cat) < HUNT_RADIUS:
                 self.state = "hunt"
         elif self.state == "hunt":
             self.calc_preditction_mouse()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
-            dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
+            dist_mc = self.distance(self.x_mouse, self.y_mouse, self.x_cheese, self.y_cheese)
             dist_cc = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
             if dist_cc > dist_mc:
                 self.state = "cheese"
-        if (dist_cat_mouse < GOAL_RADIUS):
-            self.state = "hunt"
 
         #
         # dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
