@@ -120,30 +120,82 @@ class Cat:
 
     def calculate_force(self):
         # force Manipulatoren
-        rel_phi = 90  # ganzzahlig und positiv
+        rel_phi = 80  # ganzzahlig und positiv
         rel_range = 0.8
-        a = 14
+        a = 18
         b = 0.1
         # mouse ignorieren
-        size_mouse = 1.4
+        size_mouse = 0.8
 
         force = np.zeros(2)
 
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
 
-        for i in range(-rel_phi, rel_phi + 1):
+        rad_cheese = m.sqrt(2*0.1**2) #radius Mous
+        scam_angle_increment=0.0175019223243
+
+        #Mouse rausrechnen
+        if (self.state == "hunt" and self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse) <= rel_range): # jagt und Mosu in sensorreichweite
+            delta_x = self.x_mouse- self.x_cat
+            delta_y = self.y_mouse - self.y_cat
+
+            angle_mous = m.atan2(delta_y, delta_x) - self.phi_cat
+
+            scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
+            scan_mous_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
+            border__mouse_l = ((scan_mous_middle+scan_mous_border)+2*m.pi)%(2*m.pi)
+            border__mouse_r = ((scan_mous_middle-scan_mous_border)+2*m.pi)%(2*m.pi)
+
+            print("Mous in Scanreichweite.")
+            print("Ignor sensor_angles ",border__mouse_l, " bis ", border__mouse_r)
+
+            for i in range(-rel_phi, rel_phi+1):
+                if (self.sensor_ranges[i] < rel_range):
+                    if(border__mouse_l < border__mouse_r): # geht ueber 0gard
+                        if( self.sensor_angles[i] <= border__mouse_l):
+                            self.sensor_ranges[i] = 0
+                        elif( self.sensor_angles[i] >= border__mouse_r):
+                            self.sensor_ranges[i] = 0
+                    else:
+                        if( border__mouse_l > self.sensor_angles[i] > border__mouse_r ):
+                            self.sensor_ranges[i] = 0
+
+
+        distance_cheese = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
+        # Cheese einrechnen
+        if(distance_cheese <= rel_range):
+            delta_x = self.x_cheese- self.x_cat
+            delta_y = self.y_cheese - self.y_cat
+
+            angular_cheese = m.atan2(delta_y, delta_x) - self.phi_cat
+
+            scan_cheese_middle = round(((angular_cheese)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
+            scan_cheese_border = round(m.atan2(rad_cheese, distance_cheese )/scam_angle_increment)*scam_angle_increment
+            border_cheese_l = ((scan_cheese_middle+scan_cheese_border)+2*m.pi)%(2*m.pi)
+            border_cheese_r = ((scan_cheese_middle-scan_cheese_border)+2*m.pi)%(2*m.pi)
+
+            print("Cheese in Scanreichweite.")
+            print("Relevante sensor_angles ",border_cheese_l, " bis ", border_cheese_r)
+
+            for i in range(-rel_phi, rel_phi+1):
+                if(border_cheese_l < border_cheese_r): # geht ueber 0gard
+                    if(self.sensor_angles[i] <= border_cheese_l):
+                        self.sensor_ranges[i] = distance_cheese-(m.sqrt(rad_cheese**2-(m.tan(scan_cheese_middle-self.sensor_angles[i])/distance_cheese)**2))
+                    elif( self.sensor_angles[i] >= border_cheese_r ):
+                        self.sensor_ranges[i] = distance_cheese-(m.sqrt(rad_cheese**2-(m.tan(scan_cheese_middle-self.sensor_angles[i])/distance_cheese)**2))
+                elif( border_cheese_l > self.sensor_angles[i] > border_cheese_r ):
+                    self.sensor_ranges[i] = distance_cheese-(m.sqrt(rad_cheese**2-(m.tan(scan_cheese_middle-self.sensor_angles[i])/distance_cheese)**2))
+
+        # Force Berechnen
+        for i in range(-rel_phi, rel_phi+1):
             if (self.sensor_ranges[i] < rel_range):
-                force[1] += -m.sin(4 * self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+                force[1] += -m.sin(self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+
 
         force[1] /= a
         # if ((force[1] > -b and force[1] < b)):
         #     force[1] *= 2
-        # elif (force[1] < -0.8):
-        # force[1] = -0.8
-        # elif (force[1] > 0.8):
-        # force[1] = 0.8
-        #print(force)
         return force
 
     def homing(self):
@@ -156,8 +208,8 @@ class Cat:
 
         # if self.distance(self.x_cat,self.y_cat,self.x_mouse,self.y_mouse) < 1:
         #     force[1] = 0
-
-        out.angular.z = self.alpha + force[1]
+        print("ALPHA= ",self.alpha," Force= ",2*force[1])
+        out.angular.z = self.alpha + 2*force[1]
         if out.angular.z > 0.8:
             out.angular.z = 0.8
         if out.angular.z < -0.8:
