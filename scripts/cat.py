@@ -145,9 +145,9 @@ class Cat:
             scan_mous_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scam_angle_increment)*scam_angle_increment
             scan_mous_border = round(m.atan2(size_mouse, self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse))/scam_angle_increment)*scam_angle_increment
 
-            border__mouse_l = abs(scan_mous_middle+scan_mous_border)
+            border__mouse_l = abs(scan_mous_middle+scan_mous_border)%(2*m.pi)
 
-            border__mouse_r = abs(scan_mous_middle-scan_mous_border)
+            border__mouse_r = abs(scan_mous_middle-scan_mous_border)%(2*m.pi)
 
             print("Mous in Scanreichweite.")
             print("Ignor sensor_angles ",border__mouse_l, " bis ", border__mouse_r)
