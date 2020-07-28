@@ -132,19 +132,19 @@ class Cat:
         while self.sensor_ranges is None and self.sensor_angles is None:
             print("Wait for laser_callback.")
 
-        rad_cheese = m.sqrt(2*0.1**2) #radius Mous
+        rad_cheese = m.sqrt(2*0.1**2) #Radius Cheese
         scan_angle_increment=0.0175019223243
         
         distance_cat_mouse = self.distance(self.x_cat, self.y_cat, self.x_mouse, self.y_mouse)
         
         #Mouse rausrechnen
         if (self.state == "hunt" and distance_cat_mouse*size_mouse <= rel_range): # jagt und Mosu in sensorreichweite
-            delta_x = self.x_mouse- self.x_cat
+            delta_x = self.x_mouse - self.x_cat
             delta_y = self.y_mouse - self.y_cat
 
-            angle_mous = m.atan2(delta_y, delta_x) - self.phi_cat
+            angle_mouse = m.atan2(delta_y, delta_x) - self.phi_cat
 
-            scan_mouse_middle = round(((angle_mous)+2*m.pi)%(2*m.pi)/scan_angle_increment)*scan_angle_increment
+            scan_mouse_middle = round(((angle_mouse)+2*m.pi)%(2*m.pi)/scan_angle_increment)*scan_angle_increment
             scan_mouse_border = round(m.atan2(size_mouse, distance_cat_mouse)/scan_angle_increment)*scan_angle_increment
 
             border__mouse_l = abs(scan_mouse_middle+scan_mouse_border)%(2*m.pi)
