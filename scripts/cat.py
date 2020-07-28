@@ -13,7 +13,8 @@ CONSTANT_CAT_SPEED = 0.22
 MAX_TURNING_FACTOR = 1
 GOAL_RADIUS = 0.7
 HUNT_RADIUS = 0.862
-
+LET_GO_RADIUS = 3
+HYSTERESIS = 0.2
 
 class Cat:
     def __init__(self):
@@ -133,7 +134,7 @@ class Cat:
 
         for i in range(-rel_phi, rel_phi + 1):
             if (self.sensor_ranges[i] < rel_range):
-                force[1] += -m.sin(2 * self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
+                force[1] += -m.sin(4 * self.sensor_angles[i]) * (rel_range - self.sensor_ranges[i])
 
         force[1] /= a
         # if ((force[1] > -b and force[1] < b)):
@@ -142,7 +143,7 @@ class Cat:
         # force[1] = -0.8
         # elif (force[1] > 0.8):
         # force[1] = 0.8
-        print(force)
+        #print(force)
         return force
 
     def homing(self):
@@ -165,41 +166,30 @@ class Cat:
 
     def set_state(self):
 
+        distance_mouse_cat = self.distance(self.x_mouse, self.y_mouse, self.x_cat, self.y_cat)
+        distance_mouse_cheese = self.distance(self.x_mouse, self.y_mouse, self.x_cheese, self.y_cheese)
+
         print(self.state)
         if self.state == "cheese":
             self.update_polar(self.x_cheese, self.y_cheese)
             if self.distance(self.x_cheese, self.y_cheese, self.x_cat, self.y_cat) < GOAL_RADIUS:
                 self.state = "mid"
-            if self.distance(self.x_mouse, self.y_mouse, self.x_cat, self.y_cat) < HUNT_RADIUS:
+            if distance_mouse_cat < HUNT_RADIUS and distance_mouse_cheese > LET_GO_RADIUS:
                 self.state = "hunt"
         elif self.state == "mid":
             self.calc_mid_point()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
             if self.distance(self.attraction_point_x, self.attraction_point_y, self.x_cat, self.y_cat) < GOAL_RADIUS:
                 self.state = "hunt"
-            if self.distance(self.x_mouse, self.y_mouse, self.x_cat, self.y_cat) < HUNT_RADIUS:
+            if distance_mouse_cat < HUNT_RADIUS and distance_mouse_cheese < LET_GO_RADIUS:
                 self.state = "hunt"
         elif self.state == "hunt":
             self.calc_preditction_mouse()
             self.update_polar(self.attraction_point_x, self.attraction_point_y)
             dist_mc = self.distance(self.x_mouse, self.y_mouse, self.x_cheese, self.y_cheese)
             dist_cc = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
-            if dist_cc > dist_mc:
+            if dist_cc > dist_mc + HYSTERESIS:
                 self.state = "cheese"
-
-        #
-        # dist_mc = self.distance(self.x_mouse,self.y_mouse,self.x_cheese,self.y_cheese)
-        # dist_cc = m.sqrt((self.x_cat - self.x_cheese) ** 2 + (self.y_cat - self.y_cheese) ** 2)
-        #
-        # if dist_cc < dist_mc:  # Cat naeher an chees => Mous als Ziel
-        #     self.calc_preditction_mouse()
-        #     self.update_polar(self.attraction_point_x, self.attraction_point_y)
-        #     print("Ziel Mous")
-        # else:  # Mous naeher an chees => Attraktionpoint als Ziel
-        #     self.update_polar(self.x_cheese, self.y_cheese)
-        #     print("Ziel Kaese")
-        # # self.calc_attraction_point()
-        # # self.update_polar(self.attraction_point_x, self.attraction_point_y)
         self.homing()
 
 
