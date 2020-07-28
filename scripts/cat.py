@@ -164,7 +164,7 @@ class Cat:
 
         distance_cheese = self.distance(self.x_cat, self.y_cat, self.x_cheese, self.y_cheese)
         # Cheese einrechnen
-        if(distance_cheese <= rel_range):
+        if(distance_cheese-rad_cheese <= rel_range):
             delta_x = self.x_cheese- self.x_cat
             delta_y = self.y_cheese - self.y_cat
 
@@ -181,11 +181,14 @@ class Cat:
             for i in range(-rel_phi, rel_phi+1):
                 if(border_cheese_l < border_cheese_r): # geht ueber 0gard
                     if(self.sensor_angles[i] <= border_cheese_l):
-                        self.sensor_ranges[i] = distance_cheese-(m.sqrt(rad_cheese**2-(m.tan(scan_cheese_middle-self.sensor_angles[i])/distance_cheese)**2))
+                        print("Midi", scan_cheese_middle, " Winkel", self.sensor_angles [i])
+                        self.sensor_ranges[i] = distance_cheese-(m.sqrt (abs(rad_cheese**2 - (m.tan (abs(scan_cheese_middle-self.sensor_angles[i])) / distance_cheese) **2)))
                     elif( self.sensor_angles[i] >= border_cheese_r ):
-                        self.sensor_ranges[i] = distance_cheese-(m.sqrt(rad_cheese**2-(m.tan(scan_cheese_middle-self.sensor_angles[i])/distance_cheese)**2))
+                        print("Midi", scan_cheese_middle, " Winkel", self.sensor_angles [i])
+                        self.sensor_ranges[i] = distance_cheese-(m.sqrt (abs(rad_cheese**2 - (m.tan(abs(scan_cheese_middle-self.sensor_angles[i]))/distance_cheese) **2)))
                 elif( border_cheese_l > self.sensor_angles[i] > border_cheese_r ):
-                    self.sensor_ranges[i] = distance_cheese-(m.sqrt(rad_cheese**2-(m.tan(scan_cheese_middle-self.sensor_angles[i])/distance_cheese)**2))
+                    print("Midi", scan_cheese_middle, " Winkel", self.sensor_angles [i])
+                    self.sensor_ranges[i] = distance_cheese-(m.sqrt (abs(rad_cheese**2-(m.tan (abs(scan_cheese_middle-self.sensor_angles[i]))/distance_cheese)**2)))
 
         # Force Berechnen
         for i in range(-rel_phi, rel_phi+1):
@@ -208,8 +211,8 @@ class Cat:
 
         # if self.distance(self.x_cat,self.y_cat,self.x_mouse,self.y_mouse) < 1:
         #     force[1] = 0
-        print("ALPHA= ",self.alpha," Force= ",2*force[1])
-        out.angular.z = self.alpha + 2*force[1]
+        print("ALPHA= ",self.alpha," Force= ",3*force[1])
+        out.angular.z = self.alpha + 3*force[1]
         if out.angular.z > 0.8:
             out.angular.z = 0.8
         if out.angular.z < -0.8:
