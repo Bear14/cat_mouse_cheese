@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  11 AUG 2020 18:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  25 AUG 2020 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -420,33 +420,59 @@ Non-PDF special ignored!
 \openout7 = `roga_docu.lot'.
 
  [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 323.
- [1]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 323.
+! Misplaced alignment tab character &.
+<argument> Maps &
+                  Robo
+l.289 \subsection{Maps & Robo}
+                               Nico
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-(./roga_docu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 323.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 323.
-Package rerunfilecheck Info: File `roga_docu.out' has not changed.
-(rerunfilecheck)             Checksum: 56F910FF9276684ECCA9B4EE76EF0810;146.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 323.
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `alignment tab' on input line 289.
+
+[1]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 340.
+ [2]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 340.
+ (./roga_docu.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 340.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 340.
+
+
+Package rerunfilecheck Warning: File `roga_docu.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `roga_docu.out':
+(rerunfilecheck)             Before: 56F910FF9276684ECCA9B4EE76EF0810;146
+(rerunfilecheck)             After:  FC04F3A49DEAAFF42FAF2E865222D651;870.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 340.
  ) 
 Here is how much of TeX's memory you used:
- 7882 strings out of 494830
- 126248 string characters out of 6177367
- 294652 words of memory out of 5000000
+ 7896 strings out of 494830
+ 126416 string characters out of 6177367
+ 296651 words of memory out of 5000000
  11103 multiletter control sequences out of 15000+600000
  26759 words of font info for 58 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 42i,10n,51p,8820b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on roga_docu.pdf (5 pages, 54649 bytes).
+ 42i,10n,51p,8820b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{subsection.1.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
+Output written on roga_docu.pdf (6 pages, 59296 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 54 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
+ 86 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
+ 26 named destinations out of 1000 (max. 500000)
  25 words of extra memory for PDF output out of 10000 (max. 10000000)
 
