@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  25 AUG 2020 16:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  28 AUG 2020 17:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -316,20 +316,20 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 (./roga_docu.aux)
 \openout1 = `roga_docu.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 255.
-LaTeX Font Info:    ... okay on input line 255.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 258.
+LaTeX Font Info:    ... okay on input line 258.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -370,7 +370,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-Package hyperref Info: Link coloring ON on input line 255.
+Package hyperref Info: Link coloring ON on input line 258.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -380,28 +380,28 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count106
 )
-LaTeX Info: Redefining \ref on input line 255.
-LaTeX Info: Redefining \pageref on input line 255.
-LaTeX Info: Redefining \nameref on input line 255.
+LaTeX Info: Redefining \ref on input line 258.
+LaTeX Info: Redefining \pageref on input line 258.
+LaTeX Info: Redefining \nameref on input line 258.
 
 (./roga_docu.out) (./roga_docu.out)
 \@outlinefile=\write4
 \openout4 = `roga_docu.out'.
 
-LaTeX Font Info:    Try loading font information for T1+aess on input line 262.
+LaTeX Font Info:    Try loading font information for T1+aess on input line 265.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aess.fd
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 262.
+(Font)              <17.28> on input line 265.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 262.
+(Font)              <12> on input line 265.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 264.
+(Font)              <8> on input line 267.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 264.
+(Font)              <6> on input line 267.
  [1
 Non-PDF special ignored!
 
@@ -420,59 +420,38 @@ Non-PDF special ignored!
 \openout7 = `roga_docu.lot'.
 
  [4]
-! Misplaced alignment tab character &.
-<argument> Maps &
-                  Robo
-l.289 \subsection{Maps & Robo}
-                               Nico
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `alignment tab' on input line 289.
-
-[1]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 340.
- [2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 340.
+<homingZiele.png, id=105, 555.57562pt x 470.50781pt>
+File: homingZiele.png Graphic file (type png)
+<use homingZiele.png>
+Package pdftex.def Info: homingZiele.png  used on input line 304.
+(pdftex.def)             Requested size: 313.69029pt x 265.65791pt.
+ [1]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 355.
+ [2 <./homingZiele.png>] [3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 355.
  (./roga_docu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 340.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 340.
-
-
-Package rerunfilecheck Warning: File `roga_docu.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `roga_docu.out':
-(rerunfilecheck)             Before: 56F910FF9276684ECCA9B4EE76EF0810;146
-(rerunfilecheck)             After:  FC04F3A49DEAAFF42FAF2E865222D651;870.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 340.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 355.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 355.
+Package rerunfilecheck Info: File `roga_docu.out' has not changed.
+(rerunfilecheck)             Checksum: 1688BB0EFD3D07F4942B2B223D1BF654;866.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 355.
  ) 
 Here is how much of TeX's memory you used:
- 7896 strings out of 494830
- 126416 string characters out of 6177367
- 296651 words of memory out of 5000000
- 11103 multiletter control sequences out of 15000+600000
+ 7916 strings out of 494830
+ 126697 string characters out of 6177367
+ 295672 words of memory out of 5000000
+ 11120 multiletter control sequences out of 15000+600000
  26759 words of font info for 58 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 42i,10n,51p,8820b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.1.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on roga_docu.pdf (6 pages, 59296 bytes).
+ 42i,10n,51p,8820b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
+Output written on roga_docu.pdf (7 pages, 88163 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
- 26 named destinations out of 1000 (max. 500000)
- 25 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 145 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
+ 27 named destinations out of 1000 (max. 500000)
+ 126 words of extra memory for PDF output out of 10000 (max. 10000000)
 

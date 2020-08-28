@@ -51,7 +51,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 
 %%% babel: language set (can cause some conflicts with package ngerman)
 %%%        use it only for multi-language documents or non-german ones
-%\usepackage[ngerman]{babel}
+% \usepackage[ngerman]{babel}
 
 %%% inputenc: coding of german special characters
 \usepackage[latin1]{inputenc}
@@ -168,10 +168,13 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 %% provides: including centered pictures/graphics with a boldfaced caption below
 %% 
 \newcommand{\mygraphics}[3]{
+\begin{figure}
   \begin{center}
     \includegraphics[width=#1, keepaspectratio=true]{#2} \\
-    \textbf{#3}
+    \caption{#3}
   \end{center}
+\end{figure}
+
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -284,20 +287,32 @@ Nicolas Hartlieb (Matrikelnummer)}
 %%%
 
 \section{Zusammenfassung}
-
-\section{Aufgabenstellung} Nico
-\subsection{Maps & Robo} Nico
-\subsection{Technischer Stand minmax Kraftbasiert etc. A Star} Nico
-\subsection{Zielsetzung} Nico
+Nico
+\section{Aufgabenstellung}
+Nico
+\subsection{Maps Robo}
+Nico
+\subsection{Technischer Stand minmax Kraftbasiert etc. A Star}
+Nico
+\subsection{Zielsetzung}
+Nico
 
 \section{Konzept}
-\subsection{State machine?} Torben
-\subsection{Homing} Torben
-\subsection{Collison Avoidance} Fabian
+\subsection{State machine?}
+Torben
+\subsection{Homing}
+\mygraphics{0.7\textwidth}{homingZiele.png}{Ziele fuer das Homing}
 
-\section{Dikussion und Ausblick} Alle
-\subsection{Videos} Alle
-\subsection{Szenarien} Alle
+Torben
+\subsection{Collison Avoidance}
+Fabian
+
+\section{Dikussion und Ausblick}
+Alle
+\subsection{Videos}
+Alle
+\subsection{Szenarien}
+Alle
 
 
 

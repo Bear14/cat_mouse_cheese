@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  11 AUG 2020 18:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  28 AUG 2020 17:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -398,21 +398,34 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <17.28> on input line 262.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 262.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 318.
+ (./template_bericht.toc)
+\tf@toc=\write5
+\openout5 = `template_bericht.toc'.
+
+(./template_bericht.lof)
+\tf@lof=\write6
+\openout6 = `template_bericht.lof'.
+
+ (./template_bericht.lot)
+\tf@lot=\write7
+\openout7 = `template_bericht.lot'.
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 318.
+(Font)              <8> on input line 276.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 318.
+(Font)              <6> on input line 276.
  [1
 Non-PDF special ignored!
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 318.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 316.
 
-(./template_bericht.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 318.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 318.
+[2]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 316.
+ (./template_bericht.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 316.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 316.
 
 
 Package rerunfilecheck Warning: File `template_bericht.out' has changed.
@@ -420,25 +433,26 @@ Package rerunfilecheck Warning: File `template_bericht.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `template_bericht.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  09422B2A8C58868B11580B4480656E65;38.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 318.
+(rerunfilecheck)             Before: 866D31EF6552721CE36D5850B2689CE2;40
+(rerunfilecheck)             After:  C5776F5CAFE11DA1675A3804CA9EB151;93.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 316.
  ) 
 Here is how much of TeX's memory you used:
- 7827 strings out of 494830
- 125624 string characters out of 6177367
+ 7874 strings out of 494830
+ 126289 string characters out of 6177367
  294600 words of memory out of 5000000
- 11076 multiletter control sequences out of 15000+600000
- 22171 words of font info for 47 fonts, out of 8000000 for 9000
+ 11099 multiletter control sequences out of 15000+600000
+ 26759 words of font info for 58 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  42i,10n,51p,8827b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on template_bericht.pdf (1 page, 29481 bytes).
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
+Output written on template_bericht.pdf (2 pages, 41245 bytes).
 PDF statistics:
- 26 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
- 3 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 45 PDF objects out of 1000 (max. 8388607)
+ 36 compressed objects within 1 object stream
+ 8 named destinations out of 1000 (max. 500000)
+ 9 words of extra memory for PDF output out of 10000 (max. 10000000)
 
