@@ -309,6 +309,12 @@ F"ur das Homing gibt es vier verschiedene Ziele (\ref{fig:homingZiele.png}). Den
 \subsubsection{Zustandsautomat}
 Die Zielauswahl wird durch einen Zustandsautomat (\ref{fig:stateMachine.png}) festgelegt.
 Der Zustandsautomat besitzt drei Zust"ande, mit dem Zustand \glqq go to cheese\grqq{} als Startzustand. Der Zustand \glqq go to cheese\grqq{} enspricht dem K"ase, der Zustand \glqq go to mid\grqq{} den Mittelpunkt zwischen Maus und K"ase als Ziel und der Zustand \glqq hunt\grqq{} fasst die zwei Ziele Maus und den vorrausberechnenten Punkt zusammen. Wie der Zustand \glqq hunt\grqq{} sich verh"alt wird im Abschnitt \ref{hunt} genauer erl"autert.\\
+\hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
+\hline
+m\_c\_d := Maus-Katze Distanz \\ m\_ch\_d := Maus-Käse Distanz \\ c\_ch\_d := Katze-Käse Distanz \\
+\hline
+\end{tabular}}
+
 \mygraphics{0.7\textwidth}{stateMachine.png}{Zustandsautomat}
 Es gibt drei Kriterien die einen Zustandswechsel zur Folge haben. Das \glqq arrived\grqq{} Kriterium ist hierbei das einfachste und wird erreicht sobald ein gewisser Abstand zum Zielpunkt unterschritten wird.\\
 Das zweite Kriterium \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{} besagt: sollten der Abstand zwischen Katze und Maus einen gewissen Wert $P_{1}$ unterschritten haben und zus"atzlich der Abstand zwischen K"ase und Maus einen weiteren Wert $P_{2}$ "uberschritten haben so wird der Zustand gewechselt. Umgangsprachlich ausgedr"uckt bedeutet es das sollte sich die Katze nah an der Maus befinden und die Maus aber noch weit genug vom K"ase weg sein so wird die Maus gejagt. Wobei der Parameter $P_{1}$ \glqq nah \grqq{} und der Parameter $P_{2}$ \glqq noch weit genug\grqq{} eingerenzt. $P_{1}$ und $P_{2}$ wurden empirisch festgelegt.\\
@@ -319,10 +325,30 @@ Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, fin
 \clearpage
 \subsubsection{Zustand: \glqq hunt\grqq{}}
 \label{hunt}
-Grundlegend wird im Zustand \glqq hunt\grqq{} entschieden ob die Maus direkt als Ziel angefahren wird oder ob die Katze versucht die Bewegung der Maus vorrauszusehen.\\
-Das vorrausberechnen der Maus bewegung bezweckt eine Schlingerbewegung der Maus weg vom K"ase. Dieser Ansatz zielt auf das Gegenspiel gegen Kraftbasierte M"ause ab.
+
+Der Zustand \glqq hunt\grqq{} entscheidet ob die Maus direkt als Ziel angefahren wird oder ob die Katze die Bewegung der Maus vorrausberechnet. Im Fall der Vorrausberechnung wird auch entschieden wie weit vorrausberechnet wird.\\
+Das Berechnen der Bewegung bezweckt eine sich vom Käse entfernende Schlingerbewegung der Maus (\ref{fig:ziel.png}).
+Dieser Ansatz fungiert als Gegenspieler zu einem kraftbasierten Ansatz der Maus. 
 \mygraphics{0.6\textwidth}{ziel.png}{Schlingerbewegung}
-Diese Schlingerbewegung wird errreicht indem 
+
+Um das Verhalten zu erreichen wird die Bewegung der Maus verschieden weit Vorrausberechnet.
+Ist die Katze sehr nah an der Maus so wird die Maus als Ziel genutzt. Ist die Katze nah so wird die Maus maximal weit vorrausbrechnet. Umsoweiter die Katze von der Maus entfernt ist umso weniger weit wird die Maus vorrausberechnet.
+Bis schließlich die Maus wieder als Ziel genutzt wird.
+
+
+
+
+Das Verhalten wird mittels eines r-Wertes erzeugt. Der r-Wert gibt an wie weit die Bewegung der Maus vorrausberechnet wird. Grundlegend benötigt diese Funktion drei Zonen. In der ersten Zone müssen alle Wert null sein, in der Zweiten Zone werden sehr hohe Werte benötigt und in der dritten Zone müssen die Werte langsam fallen.\\
+Er wurde die Funktion $ \frac{2}{x} - \frac{2}{x^3}$ gewählt (\ref{fig:huntFunction.png}).
+
+
+
+
+
+ Grundlegend besitzt die Funktion drei Zonen. In der ersten Zone, befindet sich die Katze sehr nah an der Maus, wird die Maus direkt als Ziel genutzt, In der zweiten Zone wird die Bewegung sehr weit vorrausberechnet und in der dritten Zone wird umsoweiter die Katze von der Maus entfernt ist umso eher wird die Maus als Ziel genutzt.
+
+
+
 \mygraphics{0.9\textwidth}{huntFunction.png}{r-Faktor Funktion}
 \clearpage
 \subsection{Collison Avoidance}
