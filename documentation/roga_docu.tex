@@ -287,13 +287,51 @@ Nicolas Hartlieb (Matrikelnummer)}
 %%%
 
 \section*{Zusammenfassung}
-Nico
+Bei dem "Cat Mouse Cheese" Projekt gibt es zwei Roboter: eine Katze und eine Maus. Desweiteren befindet sich ein Stück Käse auf dem Spielfeld.
+Ziel der Katze ist es die Maus zu fangen und zu verhindern, dass die Maus den Käse bekommt.
+Die Maus muss dementsprechend der Katze ausweichen und zum Käse kommen.
+
+Das Spiel gilt als beendet, sobald
+    a) Die Katze die Maus gefangen hat                     => Die Katze siegt
+    b) Die Maus kommt zum Käse                             => Die Maus siegt
+    c) Nach einer gewissen Zeit tritt weder a) noch b) ein => Unentschieden
+    
+In diesem Projekt wurde die Rolle der Katze übernommen.
 \section{Aufgabenstellung}
-Nico
+Bei den verwendeten Robotern handelt es sich jeweils um einen Turtlebot3.(??? noch genauer nachsehen)
+Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und Winkelgeschwindigkeit.
+
+Katze:
+    Lineargeschwindigkeit: konstant 0.22 m/s
+    Winkelgeschwindigkeit: -0.8 ... 0.8 rad/s
+
+Maus:
+    Lineargeschwindigkeit: konstant 0.18 m/s
+    Winkelgeschwindigkeit: -2.84 .. 2.84 rad/s
+
 \subsection{Maps Robo}
-Nico
+Das  Spiel findet auf 3 unterschiedlichen Maps statt:
+...
 \subsection{Technischer Stand minmax Kraftbasiert etc. A Star}
-Nico
+Für das Projekt gibt es keine Vorgaben, wie man das Verhalten des eigenen Roboters implementieren muss, 
+im Laufe des Semester wurden jedoch verschiedene Methoden in der Vorlesung vorgestellt.
+
+Kraftbasierte Kollisionsvermeidung und Homing:
+    Bei diesen Verfahren wird bei der Kollisionsvermeidung eine Kraft simuliert, die von den Hindernissen auf den Roboter wirken und ihn um so mehr abstoßen, 
+    je näher er an einem Hindernis ist.
+    Beim Homing erfährt der Roboter eine Anziehungskraft auf einen Punkt im Spielfeld.
+    Durch das Zusammenaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich eine neue Kraft, die den Roboter von
+    Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt
+    
+MinMax-Algorithmus:
+    bei diesem Algorithmus berechnet der Roboter wie sich verschiedene Änderungen seiner Winkelgeschwindigkeit auf das Erreichen seines Ziels auswirken.
+    Dabei entsteht ein Entscheidungsbaum mit einer gewissen Tiefe und breite, die von der Berechnungsgeschwindigkeit begrenzt wird
+    
+Shortest Path:
+    Durch die Map, die entweder schon vorliegt oder erst durch seinen Laserscanner erstellt werden muss, versuch der Roboter den kürzesten Weg zu seinem Ziel zu berechnen.
+    Um das zu erreichen wird beispielsweise ein Algorithmus wie der A*-Algorithmus verwendete
+    
+    ^ Das Zeug muss ich mir nochmal in den Folien genauer anshen
 \subsection{Zielsetzung}
 Nico
 \clearpage
