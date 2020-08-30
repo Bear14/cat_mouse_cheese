@@ -396,10 +396,14 @@ Ziel ist es die Maus für die Kollisionsvermeidung unsichtbar zu machen. \\
 
 Sobald die Maus in Sensorreichweite ist, ist es wichtig zu überprüfen ob die Sensor.range der mathematsichen Distanz zur Maus entspricht. Falls man dies nicht überprüft kann es passieren, dass sich ein Hindernis zwischen Maus und Katze befinden. Das Hindernis wir von dem Alorithmus als Maus tituliert und für die Kollisionsvermeidung nicht berücksichtigt. Dies hat zur Folge, dass die Katze in das Hindernis hineinfährt.\\
 
-Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevanten Sensorwerten zu löschen( auf infinity zu setzten). \\
+Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevanten Sensorwerten zu löschen(auf infinity zu setzten). \\
 
-Zuerst wird der angkle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus.
+Zuerst wird der angkle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus, mit den globalen Positionsangabne\footnote{Positionen der Maus in odom Sysem}.
 \[ angle\_mouse=tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
+
+Angle\_mous gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt: 
+	
+\[ laserMouse\_middle  =  \vert \frac{ (cat\_angleMouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
 
 \mygraphics{0.7\textwidth}{collisionANGLE2.png}{Blickwinkel der Katze} 
 
