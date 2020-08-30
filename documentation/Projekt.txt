@@ -13,7 +13,10 @@ In diesem Projekt wurde die Rolle der Katze übernommen.
 
 Maps und Roboter:
 
-Bei den verwendeten Robotern handelt es sich jeweils um einen Turtlebot3.(??? noch genauer nachsehen)
+Bei den verwendeten Robotern handelt es sich jeweils um einen Turtlebot3 Burger.
+Dieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindigkeit von 2.84 rad/s.(1)
+Um Hindernisse zu erkennen, besitzt er einen Laserscanner mit einer Scanreichweite von 120 ~ 3500mm und einer Auflösung von 1°.(2)
+
 Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und Winkelgeschwindigkeit.
 
 Katze:
@@ -40,14 +43,29 @@ Kraftbasierte Kollisionsvermeidung und Homing:
     Durch das Zusammenaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich eine neue Kraft, die den Roboter von
     Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt
     
-MinMax-Algorithmus:
-    bei diesem Algorithmus berechnet der Roboter wie sich verschiedene Änderungen seiner Winkelgeschwindigkeit auf das Erreichen seines Ziels auswirken.
-    Dabei entsteht ein Entscheidungsbaum mit einer gewissen Tiefe und breite, die von der Berechnungsgeschwindigkeit begrenzt wird
+Sense Plan Act:
+    Hier wird für jede Folge von möglichen Zusatänden der maximale nutzen berechnet, der Roboter arbeit somit vorrausschauend.
+    Dabei entsteht ein Suchbaum. Dieser Suchbaum kann mit dem MinMax-Algorithmus in diesem Spielfall optimiert werden.
     
-Shortest Path:
-    Durch die Map, die entweder schon vorliegt oder erst durch seinen Laserscanner erstellt werden muss, versuch der Roboter den kürzesten Weg zu seinem Ziel zu berechnen.
-    Um das zu erreichen wird beispielsweise ein Algorithmus wie der A*-Algorithmus verwendete
+Optimal Control:
+    Während bei MinMax die addierten Kosten minimiert oder der addierte Reward maximiert wird, werden bei optimal control
+    die integrierten Kosten minimiert.
     
-    ^ Das Zeug muss ich mir nochmal in den Folien genauer anshen
-    
+Path Planning:
+    Durch eine gegebene Umgebungkarte versucht der Roboter den kürzesten Weg zu seinem Ziel zu berechnen.
+    Um das zu erreichen wird die Karte beispielsweise mit einem Occupancy grid in Zellen zerlegt 
+    und mit einem Shortest Path Algorithmus wie dem A*-Algorithmus die kürzeste Distanz von Start-Ziel berechnet.
+            
 Zielsetzung:
+
+Die Katze soll allen Hindernissen ausweichen und die Maus fangen, bevor diese den Käse erreicht.
+Um diese Ziel zu erreichen wird eine kraftbasierte Kollisionsvermeidung und Homing verwendet.
+Um die Maus tatsächlich zu fangen, muss die Kollisionsvermeidung für die Maus jedeoch deaktiviert werden, Kollisionen mit anderen Hindernissen
+müssen jedoch auch weiterhin vermieden werden.
+
+Mit einer State Machine wird verhindert, dass die Maus die Katze ausmanövriert und zum Käse kommt.
+
+Quellen:
+
+(1)https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/#hardware-specifications
+(2)https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_01/
