@@ -320,7 +320,7 @@ Es gibt drei Kriterien die einen Zustandswechsel zur Folge haben. Das \glqq arri
 Das zweite Kriterium \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{} besagt: sollten der Abstand zwischen Katze und Maus einen gewissen Wert $P_{1}$ unterschritten haben und zus"atzlich der Abstand zwischen K"ase und Maus einen weiteren Wert $P_{2}$ "uberschritten haben so wird der Zustand gewechselt. Umgangsprachlich ausgedr"uckt bedeutet es, dass sollte sich die Katze nah an der Maus befinden und die Maus aber noch weit genug vom K"ase weg sein so wird die Maus gejagt. Wobei der Parameter $P_{1}$ \glqq nah \grqq{} und der Parameter $P_{2}$ \glqq noch weit genug\grqq{} eingrenzt. $P_{1}$ und $P_{2}$ wurden empirisch festgelegt.\\
 Das dritte Kriterum \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{} bedeutet: ist der Abstand zwischen der Maus und dem Käse kleiner dem Abstand zwischen der Katze und dem Käse so erfolgt der Zustandswechsel. Hier wird ein Wert $P_{3}$ hinzugefügt der als Hysterese fungiert.
 \\\\Im Zustand \glqq go to cheese\grqq{} löst das \glqq arrived\grqq{} Kriterium einen Wechsel in den Zustand \glqq go to mid\grqq{}
-aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqqVideo 1 & 2 go to mid\grqq{} den Wechsel in den Zustand \glqq hunt\grqq{} aus.
+aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqq go to mid\grqq{} den Wechsel in den Zustand \glqq hunt\grqq{} aus.
 Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, findet ein Wechsel in den Zustand \glqq hunt\grqq{} statt, sollte das zweite Kriterium, \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{}, erfüllt sein. Im Zustand \glqq hunt\grqq{} greift das dritte Kriterium, \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{}, um den Wechsel in den Zustand \glqq go to cheese\grqq{} einzuleiten.
 \subsubsection{Zustand: \glqq hunt\grqq{}}
 \label{hunt}
@@ -402,7 +402,7 @@ DIe Kritik bezieht sich auf das gegebene Problem
 Änderung der Geschwindigkeit kann keine Lösung sein --> quasi gottgegeben
 Mensch könnte auch nicht 100 kmh schnell rennen
 
-Video 1 & 2
+Video 1 und 2
 In den Videos ist zu sehen Maus funktioniert gut
 
 aber auch nur weil maus drehung nicht ausnutzen
@@ -436,7 +436,7 @@ Berechnung ist aufwändig
 
 Unser Design ist in usneren Augen das beste mit den gegbenen Voprraussetzungen weil
 
-...
+
 
 
 \subsection{VErbesserungen}
