@@ -54,7 +54,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 % \usepackage[ngerman]{babel}
 
 %%% inputenc: coding of german special characters
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 
 %%% fontenc, ae, aecompl: coding of characters in PDF documents
 \usepackage[T1]{fontenc}
@@ -81,7 +81,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 %%%
 
 %%% scrpage2: KOMA heading and footer
-%%% Note: if you don't use this package, please remove
+%%% Note: if you don't use this package, please remove 
 %%%       \pagestyle{scrheadings} and corresponding settings
 %%%       below too.
 \usepackage[automark]{scrpage2}
@@ -150,7 +150,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
   pdftitle={}, %%
   pdfauthor={}, %%
   pdfsubject={}, %%
-  pdfcreator={Accomplished with LaTeX2e and pdfLaTeX with hyperref-package.}, %%
+  pdfcreator={Accomplished with LaTeX2e and pdfLaTeX with hyperref-package.}, %% 
   pdfproducer={}, %%
   pdfkeywords={} %%
 }
@@ -166,12 +166,12 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 %% example: \mygraphics{0.7\textwidth}{rolling_grandma}{This is my grandmother on inlinescates}
 %% requires: package graphicx
 %% provides: including centered pictures/graphics with a boldfaced caption below
-%%
+%% 
 \newcommand{\mygraphics}[3]{
-\begin{figure}
+\begin{figure}[!h]
   \begin{center}
-    \includegraphics[width=#1, keepaspectratio=true]{#2} \\
-    \caption{#3}
+    \includegraphics[width=#1, keepaspectratio=true]{#2} \\    
+    \caption{#3}\label{fig:#2}
   \end{center}
 \end{figure}
 
@@ -189,7 +189,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 \title{CAT-MOUSE-CHEESE}
 
 %%% author(s)
-\author{Torben Miller (Matrikelnummer) \and
+\author{Torben Miller (3164082)\ \ \ \ \ \and
 Fabian Biedlingmaier (3224303)        \and
 Nicolas Hartlieb (Matrikelnummer)}
 
@@ -222,7 +222,7 @@ Nicolas Hartlieb (Matrikelnummer)}
 %%% set heading and footer
 %%%
 
-%%% scrheadings default:
+%%% scrheadings default: 
 %%%      footer - middle: page number
 \pagestyle{scrheadings}
 
@@ -275,7 +275,7 @@ Nicolas Hartlieb (Matrikelnummer)}
  \newpage
  \listoftables
 
-%%% display the main document on a new page
+%%% display the main document on a new page 
  \newpage
 
  \pagenumbering{arabic} %% normal page numbers (include it, if roman was used above)
@@ -286,7 +286,7 @@ Nicolas Hartlieb (Matrikelnummer)}
 %%% structure: \section \subsection \subsubsection \paragraph \subparagraph
 %%%
 
-\section{Zusammenfassung}
+\section*{Zusammenfassung}
 Nico
 \section{Aufgabenstellung}
 Nico
@@ -296,14 +296,35 @@ Nico
 Nico
 \subsection{Zielsetzung}
 Nico
+\clearpage
 
 \section{Konzept}
-\subsection{State machine?}
-Torben
+\subsection{Grundverhalten}
+Die Katze hat zwei wesentliche Grundbestandteile. Sie kann ,auf einen gegebenen Punkt, \glqq homen\grqq{} und sie besitzt eine Kollisionsvermeidung.
 \subsection{Homing}
-\mygraphics{0.7\textwidth}{homingZiele.png}{Ziele fuer das Homing}
-
-Torben
+\subsubsection{Ziele}
+F"ur das Homing gibt es vier verschiedene Ziele (\ref{fig:homingZiele.png}). Den K"ase, der Mittelpunkt zwischen K"ase und Maus, die Maus und der vermutete Punkt auf den sich die Maus zubewegt.
+\mygraphics{0.7\textwidth}{homingZiele.png}{Ziele f"ur das Homing}
+\clearpage
+\subsubsection{Zustandsautomat}
+Die Zielauswahl wird durch einen Zustandsautomat (\ref{fig:stateMachine.png}) festgelegt.
+Der Zustandsautomat besitzt drei Zust"ande, mit dem Zustand \glqq go to cheese\grqq{} als Startzustand. Der Zustand \glqq go to cheese\grqq{} enspricht dem K"ase, der Zustand \glqq go to mid\grqq{} den Mittelpunkt zwischen Maus und K"ase als Ziel und der Zustand \glqq hunt\grqq{} fasst die zwei Ziele Maus und den vorrausberechnenten Punkt zusammen. Wie der Zustand \glqq hunt\grqq{} sich verh"alt wird im Abschnitt \ref{hunt} genauer erl"autert.\\
+\mygraphics{0.7\textwidth}{stateMachine.png}{Zustandsautomat}
+Es gibt drei Kriterien die einen Zustandswechsel zur Folge haben. Das \glqq arrived\grqq{} Kriterium ist hierbei das einfachste und wird erreicht sobald ein gewisser Abstand zum Zielpunkt unterschritten wird.\\
+Das zweite Kriterium \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{} besagt: sollten der Abstand zwischen Katze und Maus einen gewissen Wert $P_{1}$ unterschritten haben und zus"atzlich der Abstand zwischen K"ase und Maus einen weiteren Wert $P_{2}$ "uberschritten haben so wird der Zustand gewechselt. Umgangsprachlich ausgedr"uckt bedeutet es das sollte sich die Katze nah an der Maus befinden und die Maus aber noch weit genug vom K"ase weg sein so wird die Maus gejagt. Wobei der Parameter $P_{1}$ \glqq nah \grqq{} und der Parameter $P_{2}$ \glqq noch weit genug\grqq{} eingerenzt. $P_{1}$ und $P_{2}$ wurden empirisch festgelegt.\\
+Das dritte Kriterum \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{} bedeutet: ist der Abstand zwischen der Maus und dem Käse kleiner dem Abstand zwischen der Katze und dem Käse so erfolgt der Zustandswechsel. Hier wird ein Wert $P_{3}$ hinzugefügt der als Hysterese fungiert.
+\\\\Im Zustand \glqq go to cheese\grqq{} löst das \glqq arrived\grqq{} Kriterium einen Wechsel in den Zustand \glqq go to mid\grqq{}
+aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqq go to mid\grqq{} den Wechsel in den Zustand \glqq hunt\grqq{} aus.
+Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, findet ein Wechsel in den Zustand \glqq hunt\grqq{} statt, sollte das zweite Kriterium, \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{}, erfüllt sein. Im Zustand \glqq hunt\grqq{} greift das dritte Kriterium, \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{}, um den Wechsel in den Zustand \glqq go to cheese\grqq{} einzuleiten.
+\clearpage
+\subsubsection{Zustand: \glqq hunt\grqq{}}
+\label{hunt}
+Grundlegend wird im Zustand \glqq hunt\grqq{} entschieden ob die Maus direkt als Ziel angefahren wird oder ob die Katze versucht die Bewegung der Maus vorrauszusehen.\\
+Das vorrausberechnen der Maus bewegung bezweckt eine Schlingerbewegung der Maus weg vom K"ase. Dieser Ansatz zielt auf das Gegenspiel gegen Kraftbasierte M"ause ab.
+\mygraphics{0.6\textwidth}{ziel.png}{Schlingerbewegung}
+Diese Schlingerbewegung wird errreicht indem 
+\mygraphics{0.9\textwidth}{huntFunction.png}{r-Faktor Funktion}
+\clearpage
 \subsection{Collison Avoidance}
 Fabian
 
