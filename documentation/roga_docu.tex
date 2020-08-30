@@ -309,6 +309,12 @@ F"ur das Homing gibt es vier verschiedene Ziele (\ref{fig:homingZiele.png}). Den
 \subsubsection{Zustandsautomat}
 Die Zielauswahl wird durch einen Zustandsautomat (\ref{fig:stateMachine.png}) festgelegt.
 Der Zustandsautomat besitzt drei Zust"ande, mit dem Zustand \glqq go to cheese\grqq{} als Startzustand. Der Zustand \glqq go to cheese\grqq{} enspricht dem K"ase, der Zustand \glqq go to mid\grqq{} den Mittelpunkt zwischen Maus und K"ase als Ziel und der Zustand \glqq hunt\grqq{} fasst die zwei Ziele Maus und den vorrausberechnenten Punkt zusammen. Wie der Zustand \glqq hunt\grqq{} sich verh"alt wird im Abschnitt \ref{hunt} genauer erl"autert.\\
+\hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
+\hline
+m\_c\_d := Maus-Katze Distanz \\ m\_ch\_d := Maus-Käse Distanz \\ c\_ch\_d := Katze-Käse Distanz \\
+\hline
+\end{tabular}}
+
 \mygraphics{0.7\textwidth}{stateMachine.png}{Zustandsautomat}
 Es gibt drei Kriterien die einen Zustandswechsel zur Folge haben. Das \glqq arrived\grqq{} Kriterium ist hierbei das einfachste und wird erreicht sobald ein gewisser Abstand zum Zielpunkt unterschritten wird.\\
 Das zweite Kriterium \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{} besagt: sollten der Abstand zwischen Katze und Maus einen gewissen Wert $P_{1}$ unterschritten haben und zus"atzlich der Abstand zwischen K"ase und Maus einen weiteren Wert $P_{2}$ "uberschritten haben so wird der Zustand gewechselt. Umgangsprachlich ausgedr"uckt bedeutet es das sollte sich die Katze nah an der Maus befinden und die Maus aber noch weit genug vom K"ase weg sein so wird die Maus gejagt. Wobei der Parameter $P_{1}$ \glqq nah \grqq{} und der Parameter $P_{2}$ \glqq noch weit genug\grqq{} eingerenzt. $P_{1}$ und $P_{2}$ wurden empirisch festgelegt.\\
