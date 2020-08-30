@@ -29,7 +29,20 @@ Maus:
 
 Das  Spiel findet auf 3 unterschiedlichen Maps statt:
 
-hier Bilder  von Maps mit Erklärung
+Hier Bild Welt1
+
+In dieser Welt gibt es viele Hindernisse, weshalb es für den Roboter schwer ist sich darin kollisionsfrei zu bewegen.
+Durch die viel langsamere Winkelgeschwindigkeit kann die Maus die Katze dort leicher ausmanövrieren.
+
+Hier Bild von Welt2
+
+Welt 2 hat weniger Hindernisse, als die erste Welt, weshalb die Kollisionsvermeidung dort für beide Roboter leichter ist, die Katze aber trotzdem
+noch ausmanövriert werden kann.
+
+Hier Bild Welt3
+
+In dieser Welt gibt es bis auf den Käse und den gegnerischen Roboter keine Hindernisse. Daher müsste die Katze durch ihre größere Lineargeschwindigkeit
+im Vorteil sein.
 
 Mögliche Implementierungsmöglichkeiten:
 
