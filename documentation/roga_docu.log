@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.11)  30 AUG 2020 13:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.26)  30 AUG 2020 18:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -106,7 +106,7 @@ Class scrartcl Info: Redefining `\numberline' on input line 5319.
 (/usr/share/texlive/texmf-dist/tex/generic/german/ngerman.sty v2.5e 1998-07-08
 Package: ngerman 1998/07/08 v2.5e Support for writing german texts (br)
 \grmnU@D=\dimen103
-ngerman -- \language number for naustrian undefined, default 8 used.
+ngerman -- \language number for naustrian undefined, default 5 used.
 ngerman -- \language number for French undefined, default 255 used.
 ) (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
@@ -732,7 +732,7 @@ Non-PDF special ignored!
 \openout7 = `roga_docu.lot'.
 
  [4] [1]
-<homingZiele.png, id=127, 555.57562pt x 470.50781pt>
+<homingZiele.png, id=141, 555.57562pt x 470.50781pt>
 File: homingZiele.png Graphic file (type png)
 <use homingZiele.png>
 Package pdftex.def Info: homingZiele.png  used on input line 307.
@@ -740,67 +740,127 @@ Package pdftex.def Info: homingZiele.png  used on input line 307.
  [2
 
  <./homingZiele.png>]
-<stateMachine.png, id=136, 673.76718pt x 318.43968pt>
+<stateMachine.png, id=150, 673.76718pt x 318.43968pt>
 File: stateMachine.png Graphic file (type png)
 <use stateMachine.png>
 Package pdftex.def Info: stateMachine.png  used on input line 312.
 (pdftex.def)             Requested size: 313.69029pt x 148.25755pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 318--324
+Underfull \hbox (badness 10000) in paragraph at lines 313--319
 
  []
 
 [3
 
- <./stateMachine.png>] [4]
-<ziel.png, id=154, 555.57562pt x 470.50781pt>
+ <./stateMachine.png>]
+<ziel.png, id=161, 555.57562pt x 470.50781pt>
 File: ziel.png Graphic file (type png)
 <use ziel.png>
-Package pdftex.def Info: ziel.png  used on input line 329.
+Package pdftex.def Info: ziel.png  used on input line 324.
 (pdftex.def)             Requested size: 268.8813pt x 227.715pt.
-<huntFunction.png, id=155, 462.528pt x 346.896pt>
+<huntFunction.png, id=162, 462.528pt x 346.896pt>
 File: huntFunction.png Graphic file (type png)
 <use huntFunction.png>
-Package pdftex.def Info: huntFunction.png  used on input line 331.
+Package pdftex.def Info: huntFunction.png  used on input line 326.
 (pdftex.def)             Requested size: 403.31511pt x 302.50107pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5
+[4
 
- <./ziel.png>] [6 <./huntFunction.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 381.
- [7
+ <./ziel.png>] [5 <./huntFunction.png>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 330.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 330.
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 337.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/ae/omsaer.fd
+File: omsaer.fd 1999/12/27
+)
+LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 337.
+
+Underfull \hbox (badness 10000) in paragraph at lines 341--342
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 343--353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 343--353
+
+ []
+
+<Kollision.png, id=177, 462.528pt x 346.896pt>
+File: Kollision.png Graphic file (type png)
+<use Kollision.png>
+Package pdftex.def Info: Kollision.png  used on input line 355.
+(pdftex.def)             Requested size: 313.69029pt x 235.27744pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 360--363
+
+ []
+
+[6
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 381.
+Underfull \hbox (badness 10000) in paragraph at lines 371--372
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--374
+
+ []
+
+[7 <./Kollision.png>]
+<collisionANGLE2.png, id=199, 595.47469pt x 470.50781pt>
+File: collisionANGLE2.png Graphic file (type png)
+<use collisionANGLE2.png>
+Package pdftex.def Info: collisionANGLE2.png  used on input line 378.
+(pdftex.def)             Requested size: 313.69029pt x 247.86028pt.
+ [8 <./collisionANGLE2.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 429.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 429.
  (./roga_docu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 381.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 381.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 429.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 429.
 Package rerunfilecheck Info: File `roga_docu.out' has not changed.
-(rerunfilecheck)             Checksum: 4B13FA9C76B01DDFC3C69C5757556E49;1036.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 381.
+(rerunfilecheck)             Checksum: 80B1E612EA8D4A1564572A7FEB94D501;1191.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 429.
  ) 
 Here is how much of TeX's memory you used:
- 8230 strings out of 494830
- 129187 string characters out of 6177367
- 300306 words of memory out of 5000000
- 11409 multiletter control sequences out of 15000+600000
- 26759 words of font info for 58 fonts, out of 8000000 for 9000
+ 8291 strings out of 494830
+ 130052 string characters out of 6177367
+ 301398 words of memory out of 5000000
+ 11444 multiletter control sequences out of 15000+600000
+ 33213 words of font info for 67 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 42i,10n,51p,8820b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on roga_docu.pdf (11 pages, 196489 bytes).
+ 42i,11n,51p,8820b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsl12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb>
+Output written on roga_docu.pdf (13 pages, 382869 bytes).
 PDF statistics:
- 206 PDF objects out of 1000 (max. 8388607)
- 176 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
- 157 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 258 PDF objects out of 1000 (max. 8388607)
+ 218 compressed objects within 3 object streams
+ 52 named destinations out of 1000 (max. 500000)
+ 183 words of extra memory for PDF output out of 10000 (max. 10000000)
 

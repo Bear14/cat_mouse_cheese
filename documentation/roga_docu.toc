@@ -7,11 +7,14 @@
 \contentsline {subsection}{\numberline {2.2}Homing}{2}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Ziele}{2}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}Zustandsautomat}{3}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}Zustand: \glqq hunt\grqq {}}{5}{subsubsection.2.2.3}
-\contentsline {subsection}{\numberline {2.3}Collison Avoidance}{7}{subsection.2.3}
-\contentsline {section}{\numberline {3}Dikussion und Ausblick}{7}{section.3}
-\contentsline {subsection}{\numberline {3.1}Videos}{7}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Szenarien}{7}{subsection.3.2}
-\contentsline {section}{\numberline {4}Hallo}{7}{section.4}
-\contentsline {subsection}{\numberline {4.1}whadiwahfliwahfi}{7}{subsection.4.1}
-\contentsline {section}{\numberline {5}Hallo2}{7}{section.5}
+\contentsline {subsubsection}{\numberline {2.2.3}Zustand: \glqq hunt\grqq {}}{4}{subsubsection.2.2.3}
+\contentsline {subsection}{\numberline {2.3}Collison Avoidance}{6}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Funktionsentwiklung}{6}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Maus reausrechen}{6}{subsubsection.2.3.2}
+\contentsline {paragraph}{\nonumberline Strategie:}{7}{section*.5}
+\contentsline {section}{\numberline {3}Dikussion und Ausblick}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Videos}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Szenarien}{8}{subsection.3.2}
+\contentsline {section}{\numberline {4}Hallo}{9}{section.4}
+\contentsline {subsection}{\numberline {4.1}whadiwahfliwahfi}{9}{subsection.4.1}
+\contentsline {section}{\numberline {5}Hallo2}{9}{section.5}

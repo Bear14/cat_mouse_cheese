@@ -327,6 +327,59 @@ Diese Schlingerbewegung wird errreicht indem
 \clearpage
 \subsection{Collison Avoidance}
 Fabian
+Die Drehung der Katze wird durch einen Radianten \footnote {Wertebereich [0:2 $\pi$]} angegeben. Ein positiver Wert führt zu einer Drehung gegen den Uhrzeigersinn, dementsprechend führt ein negativer Wert zu einer Drehung in Uhrzeigersinn.
+Die Lasersensoren scannen 360 Grad um die Katze in je 1 Grad Schritten, abgegeben in Radianten \footnote {1 Gard ~ 0,0174533}, Objekte werden ab einer entfernung von 3,5 Metern erkannt. 
+Bei der Kollisionsvermeidung werden nicht alle 360 Werte berücksichtigt. Die relevanten Werte werden durch einen Parameter angegeben \footnote {rel\_phi Zeile 123}, welche angibt wie groß der relevante Scannbereich sein soll.
+
+\subsubsection{Funktionsentwiklung}
+Folgende Kriterein waren für die Funktion der Kollisionsvermeidung wichtig.
+\begin{itemize}
+\item Je geringer die Distanz zu einem Objekt \footnote {sensor.range} desto größe die Kraft
+\item Je geringer der Winkel einem Obekt zur Fahrtrichtung der Katze, desto größer deren Kraft
+\end{itemize}
+
+Nun ist ein genauer Blick auf die Wertebereiche der relevanten Variablen nötig.\\
+
+ \begin{tabular}[h]{lcr}
+ Variable & Wert & Auswirkung auf die Kraft \\
+ sensor.angular & $[0 : rel\_phi]$ & negativ (Drehung mit den Uhrzeigersinn) \\
+ sensor.angular & $[2\pi : 2\pi-rel\_phi]$ & positiv (Drehung gegen den Uhrzeigersinn) \\
+ sensor.range & gegen 0,8  & Kraft gegen 0 \\
+ sensor.range & gegen 0 & Kraft wird größer \\
+ 
+ \end{tabular}
+\\
+\\
+
+\[ Force= -\sin(sensor.angular) * (rel\_range-sensor.range) \]
+\mygraphics{0.7\textwidth}{Kollision.png}{Funktion Collison Avoidance} 
+Die negative Sinusfunktion wird hier als Grundgerüst genommen. Da sich sensor.angle zwischen 0 und 2$/pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirkeln hingegen eine Linksdrehung. Die so entstehende, Winkel abhänige, Kraft soll nun größer werden je kleiner die Distanz ist.
+
+ 
+\subsubsection{Maus reausrechen}
+Die aufgestellte Funktion erzeugt das gewünschte Verhalten, zeigt jedoch bei späterne Tests einen gravirenden Fehler. Die Katze weicht nun bei der Jagt nach der Maus selbigerauch aus und ist so nicht im Stande die Maus zu fangen. \\
+Um dieses Problem zu lösen wurde ein Speziallfall entwickelt.
+Ziel ist es die Maus für die Kollisionsvermeidung unsichtbar zu machen. \\
+\paragraph{Strategie:}
+\begin{enumerate}
+\item Ist Maus ist in Scannreichweite?
+\item Gescannte Range entspricht der Entfernung zur Maus
+\item Relevante Winkle in bezug auf die Größe der Maus berechnen
+\item Alle sensor.range-Werte der relevanten Winkel auf infinity setzen
+\end{enumerate}
+
+Sobald die Maus in Sensorreichweite ist, ist es wichtig zu überprüfen ob die Sensor.range der mathematsichen Distanz zur Maus entspricht. Falls man dies nicht überprüft kann es passieren, dass sich ein Hindernis zwischen Maus und Katze befinden. Das Hindernis wir von dem Alorithmus als Maus tituliert und für die Kollisionsvermeidung nicht berücksichtigt. Dies hat zur Folge, dass die Katze in das Hindernis hineinfährt.\\
+
+Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevanten Sensorwerten zu löschen( auf infinity zu setzten). \\
+
+Zuerst wird der angkle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus.
+\[ angle\_mouse=tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
+
+\mygraphics{0.7\textwidth}{collisionANGLE2.png}{Blickwinkel der Katze} 
+
+
+
+ 
 
 \section{Dikussion und Ausblick}
 Alle
