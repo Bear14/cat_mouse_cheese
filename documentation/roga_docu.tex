@@ -324,8 +324,11 @@ aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqq go to mid\grq
 Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, findet ein Wechsel in den Zustand \glqq hunt\grqq{} statt, sollte das zweite Kriterium, \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{}, erfüllt sein. Im Zustand \glqq hunt\grqq{} greift das dritte Kriterium, \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{}, um den Wechsel in den Zustand \glqq go to cheese\grqq{} einzuleiten.
 \clearpage
 \subsubsection{Zustand: \glqq hunt\grqq{}}
-Grundlegend wird im Zustand \glqq hunt\grqq{} entschieden ob die Maus direkt als Ziel angefahren wird oder ob die Katze versucht die Bewegung der Maus vorrauszusehen.\\
-Das vorrausberechnen der Maus bewegung bezweckt eine Schlingerbewegung der Maus weg vom K"ase. Dieser Ansatz zielt auf das Gegenspiel gegen Kraftbasierte M"ause ab.
+\label{hunt}
+
+Der Zustand \glqq hunt\grqq{} entscheidet ob die Maus direkt als Ziel angefahren wird oder ob die Katze die Bewegung der Maus vorrausberechnet. Im Fall der Vorrausberechnung wird auch entschieden wie weit vorrausberechnet wird.\\
+Das Berechnen der Bewegung bezweckt eine sich vom Käse entfernende Schlingerbewegung der Maus (\ref{fig:ziel.png}).
+Dieser Ansatz fungiert als Gegenspieler zu einem kraftbasierten Ansatz der Maus. 
 \mygraphics{0.6\textwidth}{ziel.png}{Schlingerbewegung}
 
 Um das Verhalten zu erreichen wird die Bewegung der Maus verschieden weit Vorrausberechnet.
