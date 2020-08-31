@@ -1,6 +1,6 @@
 %%% File-Information {{{
 %%% Filename: roga_docu.tex
-%%% Purpose: project rrtrteport
+%%% Purpose: project rteport
 %%% Time-stamp: <2004-06-30 18:19:32 mp>
 %%% Authors: The LaTeX@TUG-Team [http://latex.tugraz.at/]:
 %%%          Karl Voit (vk), Michael Prokop (mp), Stefan Sollerer (ss)
@@ -402,7 +402,6 @@ Nun ist ein genauer Blick auf die Wertebereiche der relevanten Variablen nötig.
 
  \end{tabular}
 \\
-\\
 
 \[ Force= -\sin(sensor.angular) * (rel\_range-sensor.range) \]
 \mygraphics{0.7\textwidth}{Kollision.png}{Funktion Collison Avoidance}
@@ -415,9 +414,9 @@ Um dieses Problem zu lösen wurde ein Speziallfall entwickelt.
 Ziel ist es die Maus für die Kollisionsvermeidung unsichtbar zu machen. \\
 \paragraph{Strategie:}
 \begin{enumerate}
-\item Ist Maus ist in Scannreichweite?
+\item Maus ist in Scannreichweite
 \item Gescannte Range entspricht der Entfernung zur Maus
-\item Relevante Winkle in bezug auf die Größe der Maus berechnen
+\item Relevante Winkle in Bezug auf die Größe der Maus berechnen
 \item Alle sensor.range-Werte der relevanten Winkel auf infinity setzen
 \end{enumerate}
 
@@ -426,16 +425,59 @@ Sobald die Maus in Sensorreichweite ist, ist es wichtig zu überprüfen ob die S
 Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevanten Sensorwerten zu löschen(auf infinity zu setzten). \\
 
 Zuerst wird der angkle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus, mit den globalen Positionsangabne\footnote{Positionen der Maus in odom Sysem}.
-\[ angle\_mouse=tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
+\[ angle\_mouse=\tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
 
 Angle\_mous gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt:
 
-\[ laserMouse\_middle  =  \vert \frac{ (cat\_angleMouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
+\[ laserMouse\_middle  =  \vert \frac{ (angle\_mouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
+\mygraphics{0.5\textwidth}{collisionANGLE2.png}{Veranschaulichung Sensor.angle Katze}
+Nachdem der Sensorwinkel zu Mitte der Maus berechnet wurde, wird mit Hilfe des Radiuses(mouse\_radius) der Maus die Ausenwinkel berechnet.
 
-\mygraphics{0.7\textwidth}{collisionANGLE2.png}{Blickwinkel der Katze}
+\[ 
+laserMous\_border =  \vert { \tan( \frac{mouse\_radius}{\Delta cat\_mouse} ) } / angle\_increment \vert  * angle\_increment \]
+\hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
+\hline
+Winkel zwischen Rot Lils:= $\tan( \frac{mouse\_radius}{\Delta cat\_mouse} )$ \\
+Blau := mouse\_radiu s\\
+Rot := $\Delta cat\_mouse$ \\
+\hline
+\end{tabular}}
+\mygraphics{0.5\textwidth}{catmous.png}{Übersicht Funktionen Katze und Maus}
 
+Nachdem berechnet wurde welche sensor.amgle-Werte momentan die Maus scannen, werden alle Sensor.range-Werte dieser Winkel auf Infinity gesetzt. Nachdem alle relevanten Werte des Lasersensors auf Infinity gesetzt sind, ist die Maus für die Kollisionsvermeidung unsichtbar und die Katze sieht die Mous nicht als Hindernis an, welchesihre Fahrtrichtung beeinflusst.
+\mygraphics{0.5\textwidth}{collisionMOUS.png}{Lasersensor ignorieren }
 
+\subsubsection{Maus reausrechen}
+Eine Weitere Schwierigkeit zeigte sich als der Käse in der Fahrspur der Katze lag. Der Lasersensor der Katze scannt horizontal auf einer bestimmten Höhe. Da der Käse zu niedrig ist, um vom lasersensor erfasst zu werden weicht die Katze dem Käse nicht aus, sondern fährt in ihn hinein. \\
+Um dieses Verhalten zu beseitigen wurde eine Möglichkeit gesucht den Käse in die Kollisionsvermeidung miteinzubeziehen.
 
+\paragraph{Strategie:}
+\begin{enumerate}
+\item Käse ist in Scannreichweite
+\item Relevante Winkle in Bezug auf die Größe und Position des Käses berechnen
+\item Alle sensor.range-Werte der relevanten Winkel Werte zuweisen
+\end{enumerate}
+
+Mit dem Globalen Koordinaten wird überprüft ob der Käse theoretisch in Sensorreichweite ist. Parallel zum Vorgehen bei der Maus wird der Winkel vom Käse zur Katze und der Sensorwinkle zur Mitte des Käses berechnet.
+
+\[ angle\_cheese=\tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
+
+\[ laserMouse\_cheese  =  \vert \frac{ (angle\_cheese + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
+
+Nachdem berechnet wurde wo der Käse sich befindet, werden mithilfe der Kreisfunktion die sensor.range-Werte berechnet und gesetzt. $ sensor.range=\sqrt[]{ rad^2 -x^2 }$
+
+\[ sensor.range_i = \Delta cheese - \sqrt[]{ cheese\_rad^2 -\frac{\tan( laser\_cheesMiddl - angle_i) }{\Delta cheese}^2 }\]
+\hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
+\hline
+Blau := $\frac{\tan( laser\_cheesMiddl - angle_i) }{\Delta cheese}$ \\
+Rot := $\Delta cat\_cheese$ \\
+Lilia := $sensor.range_i$ \\
+\hline
+\end{tabular}}
+\mygraphics{0.5\textwidth}{catcheese.png}{Überblick Katze Käse}
+
+Nachdem alle Werte berechnez sind kann die normake Kollisionsvermeidung durchgeführt werden. Die Katze "sieht" nun dort wo sich der Käse befindet einen Halbkreis und weicht diesem Objekt aus. Es wird der Katze eine Säule an der Position des Käse vorgeteucht.
+\mygraphics{0.5\textwidth}{collisionCHEESE.png}{Käse als Hindernis Simuliert}
 
 
 \section{Dikussion und Ausblick}
