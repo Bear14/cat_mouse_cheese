@@ -1,6 +1,6 @@
 %%% File-Information {{{
 %%% Filename: roga_docu.tex
-%%% Purpose: project report
+%%% Purpose: project rrtrteport
 %%% Time-stamp: <2004-06-30 18:19:32 mp>
 %%% Authors: The LaTeX@TUG-Team [http://latex.tugraz.at/]:
 %%%          Karl Voit (vk), Michael Prokop (mp), Stefan Sollerer (ss)
@@ -81,7 +81,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 %%%
 
 %%% scrpage2: KOMA heading and footer
-%%% Note: if you don't use this package, please remove 
+%%% Note: if you don't use this package, please remove
 %%%       \pagestyle{scrheadings} and corresponding settings
 %%%       below too.
 \usepackage[automark]{scrpage2}
@@ -150,7 +150,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
   pdftitle={}, %%
   pdfauthor={}, %%
   pdfsubject={}, %%
-  pdfcreator={Accomplished with LaTeX2e and pdfLaTeX with hyperref-package.}, %% 
+  pdfcreator={Accomplished with LaTeX2e and pdfLaTeX with hyperref-package.}, %%
   pdfproducer={}, %%
   pdfkeywords={} %%
 }
@@ -166,11 +166,11 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 %% example: \mygraphics{0.7\textwidth}{rolling_grandma}{This is my grandmother on inlinescates}
 %% requires: package graphicx
 %% provides: including centered pictures/graphics with a boldfaced caption below
-%% 
+%%
 \newcommand{\mygraphics}[3]{
 \begin{figure}[!h]
   \begin{center}
-    \includegraphics[width=#1, keepaspectratio=true]{#2} \\    
+    \includegraphics[width=#1, keepaspectratio=true]{#2} \\
     \caption{#3}\label{fig:#2}
   \end{center}
 \end{figure}
@@ -222,7 +222,7 @@ Nicolas Hartlieb (Matrikelnummer)}
 %%% set heading and footer
 %%%
 
-%%% scrheadings default: 
+%%% scrheadings default:
 %%%      footer - middle: page number
 \pagestyle{scrheadings}
 
@@ -275,7 +275,7 @@ Nicolas Hartlieb (Matrikelnummer)}
  \newpage
  \listoftables
 
-%%% display the main document on a new page 
+%%% display the main document on a new page
  \newpage
 
  \pagenumbering{arabic} %% normal page numbers (include it, if roman was used above)
@@ -289,13 +289,54 @@ Nicolas Hartlieb (Matrikelnummer)}
 \section*{Zusammenfassung}
 Nico
 \section{Aufgabenstellung}
-Nico
+Bei dem "Cat Mouse Cheese" Projekt gibt es zwei Roboter: eine Katze und eine Maus. Desweiteren befindet sich ein Stück Käse auf dem Spielfeld.
+Ziel der Katze ist es die Maus zu fangen und zu verhindern, dass die Maus den Käse bekommt.
+Die Maus muss dementsprechend der Katze ausweichen und zum Käse kommen.
+Das Spiel gilt als beendet, sobald:
+\begin{description}
+\item[a)]Die Katze die Maus gefangen hat => Die Katze siegt
+\item[b)] Die Maus kommt zum Käse => Die Maus siegt
+\item[c)] Nach einer gewissen Zeit tritt weder a) noch b) ein => Unentschieden
+\end{description}
+In diesem Projekt wurde die Rolle der Katze übernommen.
+
 \subsection{Maps Robo}
-Nico
-\subsection{Technischer Stand minmax Kraftbasiert etc. A Star}
-Nico
+Bei den verwendeten Robotern handelt es sich jeweils um einenDieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindigkeit von 2.84 rad/s. Turtlebot3 Burger. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
+Um Hindernisse zu erkennen, besitzt er einen Laserscanner mit einer Scanreichweite von 120 $\sim$ 3500mm und einer Auflösung von 1 Grad. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_01/}} \\
+Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und Winkelgeschwindigkeit.\\
+\paragraph{Katze:}
+\begin{description}
+ \item Lineargeschwindigkeit: konstant 0.22 m/s
+ \item Winkelgeschwindigkeit: -0.8 ... 0.8 rad/s
+\end{description}	
+\paragraph{Maus:}
+\begin{description}
+ \item Lineargeschwindigkeit: konstant 0.18 m/s
+ \item Winkelgeschwindigkeit: -2.84 .. 2.84 rad/s
+\end{description}
+Das  Spiel findet auf 3 unterschiedlichen Maps statt:
+\mygraphics{0.6\textwidth}{Welt1.png}{Welt 1}
+
+In dieser Welt gibt es viele Hindernisse, weshalb es für den Roboter schwer ist sich darin kollisionsfrei zu bewegen. Durch die viel langsamere Winkelgeschwindigkeit kann die Maus die Katze dort leicher ausmanövrieren.
+\mygraphics{0.6\textwidth}{Welt2.png}{Welt 2}
+
+Welt 2 hat weniger Hindernisse, als die erste Welt, weshalb die Kollisionsvermeidung dort für beide Roboter leichter ist, die Katze aber trotzdem noch ausmanövriert werden kann.
+\mygraphics{0.6\textwidth}{Welt3.png}{Welt 3}
+
+In dieser Welt gibt es bis auf den Käse und den gegnerischen Roboter keine Hindernisse. Daher müsste die Katze durch ihre größere Lineargeschwindigkeit im Vorteil sein.
+\subsection{Mögliche Implementierungsmöglichkeiten}
+Für das Projekt gibt es keine Vorgaben, wie man das Verhalten des eigenen Roboters implementieren muss, 
+im Laufe des Semester wurden jedoch verschiedene Methoden in der Vorlesung vorgestellt.
+\subsubsection{Kraftbasierte Kollisionsvermeidung und Homing}
+Bei diesen Verfahren wird bei der Kollisionsvermeidung eine Kraft simuliert, die von den Hindernissen auf den Roboter wirken und ihn um so mehr abstoßen, je näher er an einem Hindernis ist. Beim Homing erfährt der Roboter eine Anziehungskraft auf einen Punkt im Spielfeld. Durch das Zusammenaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich eine neue Kraft, die den Roboter von Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt 
+\subsubsection{Sense Plan Act}
+Hier wird für jede Folge von möglichen Zusatänden der maximale nutzen berechnet, der Roboter arbeit somit vorrausschauend. Dabei entsteht ein Suchbaum. Dieser Suchbaum kann mit dem MinMax-Algorithmus in diesem Spielfall optimiert werden.
+\subsubsection{Optimal Control}
+Während bei MinMax die addierten Kosten minimiert oder der addierte Reward maximiert wird, werden bei optimal control die integrierten Kosten minimiert.
+\subsubsection{Path Planning}
+Durch eine gegebene Umgebungkarte versucht der Roboter den kürzesten Weg zu seinem Ziel zu berechnen. Um das zu erreichen wird die Karte beispielsweise mit einem Occupancy grid in Zellen zerlegt und mit einem Shortest Path Algorithmus wie dem A*-Algorithmus die kürzeste Distanz von Start-Ziel berechnet.  
 \subsection{Zielsetzung}
-Nico
+Die Katze soll allen Hindernissen ausweichen und die Maus fangen, bevor diese den Käse erreicht. Um diese Ziel zu erreichen wird eine kraftbasierte Kollisionsvermeidung und Homing verwendet. Um die Maus tatsächlich zu fangen, muss die Kollisionsvermeidung für die Maus jedeoch deaktiviert werden, Kollisionen mit anderen Hindernissen müssen jedoch auch weiterhin vermieden werden. Mit einer State Machine wird verhindert, dass die Maus die Katze ausmanövriert und zum Käse kommt.
 \clearpage
 
 \section{Konzept}
@@ -326,7 +367,7 @@ Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, fin
 \label{hunt}
 Der Zustand \glqq hunt\grqq{} entscheidet ob die Maus direkt als Ziel angefahren wird oder ob die Katze die Bewegung der Maus vorrausberechnet. Im Fall der Vorrausberechnung wird auch entschieden wie weit vorrausberechnet wird.\\
 Das Berechnen der Bewegung bezweckt eine sich vom Käse entfernende Schlingerbewegung der Maus (\ref{fig:ziel.png}).
-Dieser Ansatz fungiert als Gegenspieler zu einem kraftbasierten Ansatz der Maus. 
+Dieser Ansatz fungiert als Gegenspieler zu einem kraftbasierten Ansatz der Maus.
 \mygraphics{0.6\textwidth}{ziel.png}{Schlingerbewegung}
 Um diese Verhalten zu erreichen wird die Bewegung der Maus verschieden weit vorrausberechnet.
 Ist die Katze sehr nah an der Maus so wird die Maus als Ziel genutzt. Ist die Katze nah so wird die Maus maximal weit vorrausberechnet. Umso weiter die Katze von der Maus entfernt ist umso weniger weit wird die Maus vorrausberechnet.
@@ -340,7 +381,7 @@ gewählt mit $x := Distanz(Maus,Katze)$  (\ref{fig:huntFunction.png}).
 \subsection{Collison Avoidance}
 Fabian
 Die Drehung der Katze wird durch einen Radianten \footnote {Wertebereich [0:2 $\pi$]} angegeben. Ein positiver Wert führt zu einer Drehung gegen den Uhrzeigersinn, dementsprechend führt ein negativer Wert zu einer Drehung in Uhrzeigersinn.
-Die Lasersensoren scannen 360 Grad um die Katze in je 1 Grad Schritten, abgegeben in Radianten \footnote {1 Gard ~ 0,0174533}, Objekte werden ab einer entfernung von 3,5 Metern erkannt. 
+Die Lasersensoren scannen 360 Grad um die Katze in je 1 Grad Schritten, abgegeben in Radianten \footnote {1 Gard ~ 0,0174533}, Objekte werden ab einer entfernung von 3,5 Metern erkannt.
 Bei der Kollisionsvermeidung werden nicht alle 360 Werte berücksichtigt. Die relevanten Werte werden durch einen Parameter angegeben \footnote {rel\_phi Zeile 123}, welche angibt wie groß der relevante Scannbereich sein soll.
 
 \subsubsection{Funktionsentwiklung}
@@ -358,16 +399,16 @@ Nun ist ein genauer Blick auf die Wertebereiche der relevanten Variablen nötig.
  sensor.angular & $[2\pi : 2\pi-rel\_phi]$ & positiv (Drehung gegen den Uhrzeigersinn) \\
  sensor.range & gegen 0,8  & Kraft gegen 0 \\
  sensor.range & gegen 0 & Kraft wird größer \\
- 
+
  \end{tabular}
 \\
 \\
 
 \[ Force= -\sin(sensor.angular) * (rel\_range-sensor.range) \]
-\mygraphics{0.7\textwidth}{Kollision.png}{Funktion Collison Avoidance} 
+\mygraphics{0.7\textwidth}{Kollision.png}{Funktion Collison Avoidance}
 Die negative Sinusfunktion wird hier als Grundgerüst genommen. Da sich sensor.angle zwischen 0 und 2$/pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirkeln hingegen eine Linksdrehung. Die so entstehende, Winkel abhänige, Kraft soll nun größer werden je kleiner die Distanz ist.
 
- 
+
 \subsubsection{Maus reausrechen}
 Die aufgestellte Funktion erzeugt das gewünschte Verhalten, zeigt jedoch bei späterne Tests einen gravirenden Fehler. Die Katze weicht nun bei der Jagt nach der Maus selbigerauch aus und ist so nicht im Stande die Maus zu fangen. \\
 Um dieses Problem zu lösen wurde ein Speziallfall entwickelt.
@@ -387,15 +428,15 @@ Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevan
 Zuerst wird der angkle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus, mit den globalen Positionsangabne\footnote{Positionen der Maus in odom Sysem}.
 \[ angle\_mouse=tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
 
-Angle\_mous gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt: 
-	
+Angle\_mous gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt:
+
 \[ laserMouse\_middle  =  \vert \frac{ (cat\_angleMouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
 
-\mygraphics{0.7\textwidth}{collisionANGLE2.png}{Blickwinkel der Katze} 
+\mygraphics{0.7\textwidth}{collisionANGLE2.png}{Blickwinkel der Katze}
 
 
 
- 
+
 
 \section{Dikussion und Ausblick}
 Alle
