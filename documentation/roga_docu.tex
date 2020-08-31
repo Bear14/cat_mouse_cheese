@@ -390,7 +390,7 @@ gewählt mit $x := Distanz(Maus,Katze)$  (\ref{fig:huntFunction.png}).
 \clearpage
 \subsection{Collison Avoidance}
 Bei der Kollisionsvermeidung werden nicht alle 360 Sensorwerte berücksichtigt. Der relevante Bereich wird durch einen Parameter \footnote {rel\_phi} angegeben. Objekte die im Scanbereich sind haben eine abstoßende Wirkung auf die Katze.
-\subsubsection{Funktionsentwiklung}
+\subsubsection{Funktionsentwicklung}
 \label{collision}
 Folgende Kriterien sind für die Funktion der Kollisionsvermeidung wichtig.
 \begin{itemize}
@@ -398,18 +398,22 @@ Folgende Kriterien sind für die Funktion der Kollisionsvermeidung wichtig.
 \item Je geringer der Winkel eines Objekts zur Katze, desto größer deren Kraft \footnote{Ein Objekt in Fahrtrichtung soll eine größere Kraft haben als ein Objekt welches sich Seitlich befindet}
 \end{itemize}
 Nun ist ein genauer Blick auf die Wertebereiche der relevanten Variablen nötig.\\
- \begin{tabular}[h]{lcr}
- Variable & Wert & Auswirkung auf die Kraft \\
- sensor.angular & $[0 : rel\_phi]$ & negativ (Drehung mit den Uhrzeigersinn) \\
- sensor.angular & $[2\pi : 2\pi-rel\_phi]$ & positiv (Drehung gegen den Uhrzeigersinn) \\
- sensor.range & gegen 0,8  & Kraft gegen 0 \\
- sensor.range & gegen 0 & Kraft wird größer \\
- \end{tabular}
+\begin{tabular}[h]{|l|c|r|}
+\hline
+Variable & Wert & Auswirkung auf die Kraft \\
+sensor.angular & $[0 : rel\_phi]$ & negativ (Drehung mit den Uhrzeigersinn) \\
+sensor.angular & $[2\pi : 2\pi-rel\_phi]$ & positiv (Drehung gegen den Uhrzeigersinn) \\
+sensor.range & gegen 0,8  & Kraft gegen 0 \\
+sensor.range & gegen 0 & Kraft wird größer \\
+\hline
+\end{tabular}
+\\
 \\
 Folgende Funktion erfüllt die aufgestellten Kriterien und weist die gewünschten Verhaltensweise auf.
 \[ Force= -\sin(sensor.angular) * (rel\_range-sensor.range) \]
-\mygraphics{0.7\textwidth}{Kollision.png}{Funktion Collison Avoidance}
-Die negative Sinusfunktion wird hier als Grundgerüst genommen., da sich sensor.angle zwischen 0 und 2$/pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirken hingegen eine Linksdrehung. Die so entstehende winkelabhängige Kraft wird  nun mit der Distanz multipliziert, von der vorher von der Maximaldistanz abgezogen wird. Somit ist der Multiplikator größer, je kleiner die Distanz ist.
+\mygraphics{0.7\textwidth}{Kollision.png}{Funktion
+Collison Avoidance}
+Die negative Sinusfunktion wird hier als Grundgerüst genommen, sa sich sensor.angle zwischen 0 und $2\pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirken hingegen eine Linksdrehung. Die so entstehende winkelabhängige Kraft wird  nun mit der Distanz multipliziert, von der vorher von der Maximaldistanz abgezogen wird. Somit ist der Multiplikator größer, je kleiner die Distanz ist.
 \subsubsection{Sonderfälle}
 Die Maus wird von den Sensoren erfasst und muss daher aus der Kollisionsvermeidung herausgerechnet werden.\\
 Um dieses Problem zu lösen wurde ein Spezialfall entwickelt.
@@ -419,7 +423,7 @@ Ziel ist es alle Sensorwerte, die die Maus erfassen zu bestimmen und diese in de
 \item Maus ist in Scanreichweite
 \item Gescannte Range entspricht der Entfernung zur Maus
 \item Relevante Winkle in Bezug auf die Größe der Maus berechnen
-\item Alle sensor.range-Werte der relevanten Winkel auf infinity setzen
+\item Alle sensor.range-Werte der relevanten Winkel auf Infinity setzen
 \end{enumerate}
 Sobald die Maus in Sensorreichweite ist, ist es wichtig zu überprüfen ob die Sensor.range der mathematischen Distanz zur Maus entspricht. Falls man dies nicht überprüft kann es passieren, dass sich ein Hindernis zwischen Maus und Katze befinden. Das Hindernis wird von dem Algorithmus als Maus tituliert und für die Kollisionsvermeidung nicht berücksichtigt. Dies hat zur Folge, dass die Katze in das Hindernis hineinfährt.\\
 Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevanten Sensorwerten zu löschen, dies bedeutet sie auf Infinity zu setzen. \\
@@ -427,21 +431,21 @@ Zuerst wird der angle\_mouse berechnet dies ist der Winkel aus Sicht der Katze z
 \[ angle\_mouse=\tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
 Angle\_mouse gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt:
 \[ laserMouse\_middle  =  \vert \frac{ (angle\_mouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
-\mygraphics{0.5\textwidth}{collisionANGLE2.png}{Veranschaulichung Sensor.angle Katze}
+\mygraphics{0.5\textwidth}{collisionANGLE2.png}{Sensorwinkel Katze}
 Nachdem der Sensorwinkel zu Mitte der Maus berechnet wurde, wird mit Hilfe des Radiuses(mouse\_radius) der Maus die Außenwinkel berechnet.
 \[
 laserMous\_border =  \vert { \tan( \frac{mouse\_radius}{\Delta cat\_mouse} ) } / angle\_increment \vert  * angle\_increment \]
 \hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
 \hline
-Winkel zwischen Rot Lils:= $\tan( \frac{mouse\_radius}{\Delta cat\_mouse} )$ \\
+Winkel zwischen Rot \& Lila:= $\tan( \frac{mouse\_radius}{\Delta cat\_mouse} )$ \\
 Blau := mouse\_radiu s\\
 Rot := $\Delta cat\_mouse$ \\
 \hline
 \end{tabular}}
-\mygraphics{0.5\textwidth}{catmous.png}{Übersicht Funktionen Katze und Maus}
+\mygraphics{0.5\textwidth}{catmous.png}{Beziehungen Katze zu Maus}
 Nachdem berechnet wurde welche sensor.angle-Werte momentan die Maus scannen, werden alle Sensor.range-Werte dieser Winkel auf Infinity gesetzt. Nachdem alle relevanten Werte des     Sensors auf Infinity gesetzt sind, ist die Maus für die Kollisionsvermeidung unsichtbar und die Katze sieht die Maus nicht als Hindernis an, welche ihre Fahrtrichtung beeinflusst.\\
 \mygraphics{0.5\textwidth}{collisionMOUS.png}{Lasersensor ignorieren }
-Ein weiterer Spezialfall ist der Käse. Er ist zu niedrig um vom Lidar erfasst zu werden.
+Ein weiterer Spezialfall ist der Käse. Er ist zu niedrig um vom Lasersensor erfasst zu werden.
 \paragraph{Strategie:}
 \begin{enumerate}
 \item Käse ist in Scanreichweite
@@ -474,7 +478,7 @@ Das Problem ließe sich auf verschiedene Weise lösen, zeigt jedoch das grundsä
 \subsubsection{Recovery Strategie}
 Bei Karten mit komplexen, polygonen Hindernissen oder Sackgassen (siehe Szenario A) ist die Katze zum jetzigen Zeitpunkt nicht in der Lage darauf zu reagieren. Eine Recovery Strategie für Sackgassen fehlt komplett. Eine Strategie ließe sich mittels neuer Zustände oder äquivalent mit einer Verhaltensfusion integrieren. Für komplexe, polygone Hindernisse wäre ein Path Planning Ansatz vorteilhafter.
 \subsubsection{Sinusfunktion}
-Bei näherer Betrachtung der Funktion zur Berechnung der Kraft \ref{collision} bei der Kollisionsvermeidung fällt auf, dass bei Winkelwerten gegen 0 und gegen 2 $\pi$ die Funktion gegen 0 geht. Dies hat zur Folge, dass Objekte nahe der Fahrtrichtung wenig bis keine Abstoßungskraft haben.  Objekte die bei einem Winkel von $ \frac{2}{\pi}$ Rad und $3 \frac{\pi}{2} $   liegen haben dagegen die Maximale Abstoßungskraft(Extrempunkte).
+Bei näherer Betrachtung der Funktion zur Berechnung der Kraft (\ref{collision}) bei der Kollisionsvermeidung fällt auf, dass bei Winkelwerten gegen 0 rad und gegen $\pi /2$ rad die Funktion gegen 0 Rad geht. Dies hat zur Folge, dass Objekte nahe der Fahrtrichtung wenig bis keine Abstoßungskraft haben.  Objekte die bei einem Winkel von $ \frac{2}{\pi}$ rad und $3 \frac{\pi}{2} $ rad  liegen haben dagegen die Maximale Abstoßungskraft(Extrempunkte).
 Lösen ließe sich dieses Problem durch die Streckung der Funktion in x-Richtung, damit die Extrempunkte bei 0 und $ \frac{2}{\pi}$ liegen.
 \subsection{Ausblick und Verbesserungen}
 Beim kraftbasierten Ansatz ergeben sich sehr viele Parameter. Die Optimierung dieser ist von elementarer Bedeutung für den Erfolg des Ansatzes.
