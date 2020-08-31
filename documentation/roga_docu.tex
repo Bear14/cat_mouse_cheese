@@ -272,8 +272,8 @@ Nicolas Hartlieb (Matrikelnummer)}
  \listoffigures
 
 %%% start a new page and display the list of tables
- \newpage
- \listoftables
+ %\newpage
+ %\listoftables
 
 %%% display the main document on a new page
  \newpage
@@ -286,10 +286,10 @@ Nicolas Hartlieb (Matrikelnummer)}
 %%% structure: \section \subsection \subsubsection \paragraph \subparagraph
 %%%
 
-\section*{Zusammenfassung}
-Nico
+%\section*{Zusammenfassung}
+%Nico
 \section{Aufgabenstellung}
-Bei dem "Cat Mouse Cheese" Projekt gibt es zwei Roboter: eine Katze und eine Maus. Desweiteren befindet sich ein Stück Käse auf dem Spielfeld.
+Bei dem \glqq Cat-Mouse-Cheese\grqq{} Projekt gibt es zwei Roboter: eine Katze und eine Maus. Desweiteren befindet sich ein Stück Käse auf dem Spielfeld.
 Ziel der Katze ist es die Maus zu fangen und zu verhindern, dass die Maus den Käse bekommt.
 Die Maus muss dementsprechend der Katze ausweichen und zum Käse kommen.
 Das Spiel gilt als beendet, sobald:
@@ -300,9 +300,9 @@ Das Spiel gilt als beendet, sobald:
 \end{description}
 In diesem Projekt wurde die Rolle der Katze übernommen.
 
-\subsection{Maps Robo}
-Bei den verwendeten Robotern handelt es sich jeweils um einenDieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindigkeit von 2.84 rad/s. Turtlebot3 Burger. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
-Um Hindernisse zu erkennen, besitzt er einen Laserscanner mit einer Scanreichweite von 120 $\sim$ 3500mm und einer Auflösung von 1 Grad. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_01/}} \\
+\subsection{Anforderungen}
+Bei den verwendeten Robotern handelt es sich jeweils um einen Turtlebot3 Burger.\\ Dieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindigkeit von 2.84 rad/s. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
+Um Hindernisse zu erkennen, besitzt er einen Laserscanner mit einer Scanreichweite von 120 bis 3500mm und einer Auflösung von 1 Grad. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_01/}} \\\\
 Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und Winkelgeschwindigkeit.\\
 \paragraph{Katze:}
 \begin{description}
@@ -314,29 +314,30 @@ Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und W
  \item Lineargeschwindigkeit: konstant 0.18 m/s
  \item Winkelgeschwindigkeit: -2.84 .. 2.84 rad/s
 \end{description}
-Das  Spiel findet auf 3 unterschiedlichen Maps statt:
-\mygraphics{0.6\textwidth}{Welt1.png}{Welt 1}
+\clearpage
+\subsubsection{Maps}
+Das  Spiel findet auf drei unterschiedlichen Maps statt:
+\mygraphics{0.5\textwidth}{Welt1.png}{Welt 1}
 
 In dieser Welt gibt es viele Hindernisse, weshalb es für den Roboter schwer ist sich darin kollisionsfrei zu bewegen. Durch die viel langsamere Winkelgeschwindigkeit kann die Maus die Katze dort leicher ausmanövrieren.
-\mygraphics{0.6\textwidth}{Welt2.png}{Welt 2}
+\mygraphics{0.5\textwidth}{Welt2.png}{Welt 2}
 
 Welt 2 hat weniger Hindernisse, als die erste Welt, weshalb die Kollisionsvermeidung dort für beide Roboter leichter ist, die Katze aber trotzdem noch ausmanövriert werden kann.
-\mygraphics{0.6\textwidth}{Welt3.png}{Welt 3}
+\mygraphics{0.5\textwidth}{Welt3.png}{Welt 3}
 
 In dieser Welt gibt es bis auf den Käse und den gegnerischen Roboter keine Hindernisse. Daher müsste die Katze durch ihre größere Lineargeschwindigkeit im Vorteil sein.
 \subsection{Mögliche Implementierungsmöglichkeiten}
-Für das Projekt gibt es keine Vorgaben, wie man das Verhalten des eigenen Roboters implementieren muss, 
-im Laufe des Semester wurden jedoch verschiedene Methoden in der Vorlesung vorgestellt.
+I2m Laufe des Semester wurden verschiedene Methoden, das Verhalten des Roboters zu implementieren, in der Vorlesung vorgestellt.
 \subsubsection{Kraftbasierte Kollisionsvermeidung und Homing}
-Bei diesen Verfahren wird bei der Kollisionsvermeidung eine Kraft simuliert, die von den Hindernissen auf den Roboter wirken und ihn um so mehr abstoßen, je näher er an einem Hindernis ist. Beim Homing erfährt der Roboter eine Anziehungskraft auf einen Punkt im Spielfeld. Durch das Zusammenaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich eine neue Kraft, die den Roboter von Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt 
+Bei diesen Verfahren wird bei der Kollisionsvermeidung eine Kraft berechnet, die von den Hindernissen auf den Roboter wirken und ihn um so mehr abstoßen, je näher er an einem Hindernis ist. Beim Homing erfährt der Roboter eine Anziehungskraft auf einen Punkt im Spielfeld. Durch das Zusammenaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich eine neue Kraft, die den Roboter von Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt 
 \subsubsection{Sense Plan Act}
-Hier wird für jede Folge von möglichen Zusatänden der maximale nutzen berechnet, der Roboter arbeit somit vorrausschauend. Dabei entsteht ein Suchbaum. Dieser Suchbaum kann mit dem MinMax-Algorithmus in diesem Spielfall optimiert werden.
+Hier wird für jede Folge von möglichen Zuständen der maximale Nutzen berechnet, der Roboter arbeitet somit vorrausschauend. Dabei entsteht ein Suchbaum. Dieser Suchbaum kann mit dem MinMax-Algorithmus in diesem Spielfall optimiert werden.
 \subsubsection{Optimal Control}
 Während bei MinMax die addierten Kosten minimiert oder der addierte Reward maximiert wird, werden bei optimal control die integrierten Kosten minimiert.
 \subsubsection{Path Planning}
-Durch eine gegebene Umgebungkarte versucht der Roboter den kürzesten Weg zu seinem Ziel zu berechnen. Um das zu erreichen wird die Karte beispielsweise mit einem Occupancy grid in Zellen zerlegt und mit einem Shortest Path Algorithmus wie dem A*-Algorithmus die kürzeste Distanz von Start-Ziel berechnet.  
+Durch eine gegebene Umgebungskarte versucht der Roboter den kürzesten Weg zu seinem Ziel zu berechnen. Um dies zu erreichen wird die Karte beispielsweise mit einem Occupancy grid in Zellen zerlegt und mit einem Shortest Path Algorithmus wie dem A*-Algorithmus die kürzeste Distanz vom Start zum Ziel berechnet.  
 \subsection{Zielsetzung}
-Die Katze soll allen Hindernissen ausweichen und die Maus fangen, bevor diese den Käse erreicht. Um diese Ziel zu erreichen wird eine kraftbasierte Kollisionsvermeidung und Homing verwendet. Um die Maus tatsächlich zu fangen, muss die Kollisionsvermeidung für die Maus jedeoch deaktiviert werden, Kollisionen mit anderen Hindernissen müssen jedoch auch weiterhin vermieden werden. Mit einer State Machine wird verhindert, dass die Maus die Katze ausmanövriert und zum Käse kommt.
+In diesem Projekt soll ein kraftbasierter Ansatz implementiert werden. Anschließend sollen die Parameter so angepasst werden das sie möglichst optimal im Wettkampf gegen die anderen Ansätze der anderen Teilnehmer de Projekts abschneiden.
 \clearpage
 
 \section{Konzept}
