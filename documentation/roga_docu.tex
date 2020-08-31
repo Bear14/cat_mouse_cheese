@@ -190,8 +190,8 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 
 %%% author(s)
 \author{Torben Miller (3164082)\ \ \ \ \ \and
-Fabian Biedlingmaier (3224303)        \and
-Nicolas Hartlieb (Matrikelnummer)}
+Fabian Biedlingmaier (3224303)\ \ \ \ \ \ \and
+Nicolas Hartlieb (3155952)}
 
 %%% date
 \date{Heidelberg, am \today{}}
@@ -302,7 +302,7 @@ In diesem Projekt wurde die Rolle der Katze übernommen.
 
 \subsection{Anforderungen}
 Bei den verwendeten Robotern handelt es sich jeweils um einen Turtlebot3 Burger.\\ 
-Dieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindigkeit von 2.84 rad/s. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
+Dieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale WinkelgeschwindMatrikelnummerigkeit von 2.84 rad/s. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
 Die Drehung des Roboters wird durch einen Radianten \footnote {Wertebereich [0:2 $\pi$]} angegeben. Ein positiver Wert führt zu einer Drehung gegen den Uhrzeigersinn, dementsprechend führt ein negativer Wert zu einer Drehung in Uhrzeigersinn.
 Um Hindernisse zu erkennen, besitzt er einen Laserscanner mit einer Scanreichweite von 120 bis 3500 mm und einer Auflösung von 1 Grad. \footnote {1 Gard ~ 0,0174533} \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_01/}} 
 \\\\
@@ -321,12 +321,12 @@ Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und W
 \subsubsection{Karten}
 Für das Projekt wurden seches Karten bereitgestellt. Drei für das Spiel und drei weitere Karten um Grenzfälle zu testen.  Die drei Grenzfallkarten wurden bei der Entwicklung nicht berücksichtigt daher werden sie im folgenden nicht behandelt.
 \mygraphics{0.5\textwidth}{Welt1.png}{Welt 1}
-Die erste Welt (\ref{fig:Welt1.png} ist der stilistischen Sicht einer Schildkröte nachempfunden. Die Welt ist durch eine sechsseitige Mauer eingegrenzt Jede Ecke ist durch eine Säule abgerundet. In der Mitte der Welt befinden sich neun Säulen, die in einem Raster angeordnet sind. Der Käse ist an der gegenüberliegenden Seite zur Maus positioniert. Die Katze befindet nahe dem Käse leicht seitlich zwischen Maus und Käse.
+Die erste Welt (\ref{fig:Welt1.png}) ist der stilistischen Sicht einer Schildkröte nachempfunden. Die Welt ist durch eine sechsseitige Mauer eingegrenzt Jede Ecke ist durch eine Säule abgerundet. In der Mitte der Welt befinden sich neun Säulen, die in einem Raster angeordnet sind. Der Käse ist an der gegenüberliegenden Seite zur Maus positioniert. Die Katze befindet nahe dem Käse leicht seitlich zwischen Maus und Käse.\\ \clearpage
 \mygraphics{0.5\textwidth}{Welt2.png}{Welt 2}
-Die zweite Welt ist quadratisch eingemauert und besitzt vier Säulen in der Kartenmitte. Katze und Maus sind an gegenüberliegenden Ecken positioniert. Der Käse liegt in der Nähe der Maus allerdings blickt die Maus in entgegengesetzte Richtung.
+Die zweite Welt (\ref{fig:Welt2.png}) ist quadratisch eingemauert und besitzt vier Säulen in der Kartenmitte. Katze und Maus sind an gegenüberliegenden Ecken positioniert. Der Käse liegt in der Nähe der Maus allerdings blickt die Maus in entgegengesetzte Richtung.\\
 \mygraphics{0.5\textwidth}{Welt3.png}{Welt 3}
-In der dritten Welt befinden sich nur die Katze, die Maus und der Käse.
-Alle drei befinden sich auf einer Geraden.
+In der dritten Welt (\ref{fig:Welt3.png}) befinden sich nur die Katze, die Maus und der Käse.
+Alle drei befinden sich auf einer Geraden.\clearpage
 \subsection{Mögliche Implementierungsmöglichkeiten}
 Im Laufe des Semester wurden verschiedene Methoden, das Verhalten des Roboters zu implementieren, in der Vorlesung vorgestellt.
 \subsubsection{Kraftbasierte Kollisionsvermeidung und Homing}
@@ -370,7 +370,7 @@ Das zweite Kriterium \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{} besa
 $P_{1}$ und $P_{2}$ wurden empirisch festgelegt.\\
 Das dritte Kriterum \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{} bedeutet: ist der Abstand zwischen der Maus und dem Käse kleiner dem Abstand zwischen der Katze und dem Käse so erfolgt der Zustandswechsel. Hier wird ein Wert $P_{3}$ hinzugefügt der als Hysterese fungiert.\\
 Die Parameter $P_{1}$, $P_{2}$ und $P_{3}$ wurden empirisch festgelegt.\\
-\\
+\\\clearpage
 Im Zustand \glqq go to cheese\grqq{} löst das \glqq arrived\grqq{} Kriterium einen Wechsel in den Zustand \glqq go to mid\grqq{} aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqq go to mid\grqq{} den Wechsel in den Zustand \glqq hunt\grqq{} aus.
 Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, findet ein Wechsel in den Zustand \glqq hunt\grqq{} statt, sollte das zweite Kriterium, \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{}, erfüllt sein. Im Zustand \glqq hunt\grqq{} greift das dritte Kriterium, \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{}, um den Wechsel in den Zustand \glqq go to cheese\grqq{} einzuleiten.
 \subsubsection{Zustand: \glqq hunt\grqq{}}
@@ -391,6 +391,7 @@ gewählt mit $x := Distanz(Maus,Katze)$  (\ref{fig:huntFunction.png}).
 \subsection{Collison Avoidance}
 Bei der Kollisionsvermeidung werden nicht alle 360 Sensorwerte berücksichtigt. Der relevante Bereich wird durch einen Parameter \footnote {rel\_phi} angegeben. Objekte die im Scanbereich sind haben eine abstoßende Wirkung auf die Katze.
 \subsubsection{Funktionsentwiklung}
+\label{collision}
 Folgende Kriterien sind für die Funktion der Kollisionsvermeidung wichtig.
 \begin{itemize}
 \item Je geringer die Distanz zu einem Objekt \footnote {sensor.range} desto größe die Kraft
@@ -438,11 +439,9 @@ Rot := $\Delta cat\_mouse$ \\
 \hline
 \end{tabular}}
 \mygraphics{0.5\textwidth}{catmous.png}{Übersicht Funktionen Katze und Maus}
-Nachdem berechnet wurde welche sensor.angle-Werte momentan die Maus scannen, werden alle Sensor.range-Werte dieser Winkel auf Infinity gesetzt. Nachdem alle relevanten Werte des     Sensors auf Infinity gesetzt sind, ist die Maus für die Kollisionsvermeidung unsichtbar und die Katze sieht die Maus nicht als Hindernis an, welche ihre Fahrtrichtung beeinflusst.
+Nachdem berechnet wurde welche sensor.angle-Werte momentan die Maus scannen, werden alle Sensor.range-Werte dieser Winkel auf Infinity gesetzt. Nachdem alle relevanten Werte des     Sensors auf Infinity gesetzt sind, ist die Maus für die Kollisionsvermeidung unsichtbar und die Katze sieht die Maus nicht als Hindernis an, welche ihre Fahrtrichtung beeinflusst.\\
 \mygraphics{0.5\textwidth}{collisionMOUS.png}{Lasersensor ignorieren }
 Ein weiterer Spezialfall ist der Käse. Er ist zu niedrig um vom Lidar erfasst zu werden.
-Eine Weitere Schwierigkeit zeigte sich als der Käse in der Fahrspur der Katze lag. Der Lasersensor der Katze scannt horizontal auf einer bestimmten Höhe. Da der Käse zu niedrig ist, um vom Lasersensor erfasst zu werden weicht die Katze dem Käse nicht aus, sondern fährt in ihn hinein. \\
-Um dieses Verhalten zu beseitigen wurde eine Möglichkeit gesucht den Käse in die Kollisionsvermeidung miteinzubeziehen.
 \paragraph{Strategie:}
 \begin{enumerate}
 \item Käse ist in Scanreichweite
@@ -464,43 +463,23 @@ Lilia := $sensor.range_i$ \\
 \mygraphics{0.5\textwidth}{catcheese.png}{Überblick Katze Käse}
 Nachdem alle Werte berechnet sind kann die normale Kollisionsvermeidung durchgeführt werden. Die Katze registriert nun dort wo sich der Käse befindet einen Halbkreis und weicht diesem Objekt aus. 
 Es wird der Katze eine Säule an der Position des Käse vorgetäuscht.
-\mygraphics{0.5\textwidth}{collisionCHEESE.png}{Käse als Hindernis Simuliert}
+\mygraphics{0.5\textwidth}{collisionCHEESE.png}{Käse als Hindernis Simuliert}\clearpage
 \section{Diskussion und Ausblick}
-\subsection{Verbesserungen am Ansatz}
-\subsection{Vermutung}
-Welt 3
-In der leeren Welt ist die höhere Ge
-Welt 2
-Welt 3
-Alle
-\subsection{Videos}
-DIe Kritik bezieht sich auf das gegebene Problem
-Änderung der Geschwindigkeit kann keine Lösung sein --> quasi gottgegeben
-Mensch könnte auch nicht 100 kmh schnell rennen
-Video 1 und 2
-In den Videos ist zu sehen Maus funktioniert gut
-aber auch nur weil maus drehung nicht ausnutzen
-Video 3
-Drehung ausgenutzt und klar besser
-Im Falle von Kraftbasiert muss die Maus einen Fehler machen ansonsten hat die Katze keine Chance
-Große Probleme Bei Sackgassen
-Roboter besitzt kein Recovery verhalten
-Maus direkt hinter Hindernis
-Katze kann hängenbleiben
-Optimierung durch NN
--> Verhaltensfusion
-Aufteilung in mehrere Ros Nodes
-Kraftbasiert ist rein reaktiv
-kein planendes Verhalten
-Mit mehr Rechenkapazität ist planendes Verhalten vielversprechend
-Homing mittels A stern möglich
-Berechnung ist aufwändig
-Unser Design ist in unseren Augen das beste mit den gegebenen Voraussetzungen weil
-\subsection{Verbesserungen}
-Verhaltensfusion
-Alle
-\subsection{Szenarien}
-Alle
+\subsection{Bewertung}
+Der kraftbasierte Ansatz erweist sich nach der Auswertung auf den Welten eins bis drei als praktikabel. Durch seinen rein reaktiven Charakter ist er weniger rechenintensiv als pfadplanende Ansätze. 
+Der Erfolg ist allerdings sehr abhängig von den Karten und den implementierten Verhalten der Gegenspieler. Für komplexerer Karten, wie Szenario A-C, wäre ein Planungsalgorithmus vorteilhafter. Bei der Sichtung der Videos ist desweiteren aufgefallen, dass keine der Gegenspieler ihre volle Drehgeschwindigkeit nutzen und dadurch möglicherweise Potenzial verschenken
+\subsubsection{Fehlerhafter Zustandsautomat}
+Bei der Auswertung des Videos c\_1\_15\_1\_c  ist zu sehen, dass der Zustandsautomat nicht differenziert genug ist. In dem Video sieht man, wie die Katze aus dem Zustand \glqq hunt\grqq{} in den Zustand \glqq go to cheese\grqq{} wechselt, da die Maus näher am Käse ist als die Katze. Nachdem die Katze nun zum Käse fährt und diesen erreicht wechselt die Katze wieder in den Zustand \glqq hunt \grqq{}. Zu diesem Zeitpunkt ist die Maus jedoch schon zu nahe am Käse und die Drehgeschwindigkeit der Katze reicht nicht aus um die Maus noch zu erreichen.
+Das Problem ließe sich auf verschiedene Weise lösen, zeigt jedoch das grundsätzliche Problem, dass der Zustandsautomat nicht genügend Grenzfälle abfängt. Ein Ansatz wäre, vor dem Wechsel  vom Zustand \glqq hunt \grqq{} in den Zustand \glqq go to cheese\grqq{} den Abstand von Maus zur Katze mit der Distanz von Maus zum Käse zu vergleichen.
+\subsubsection{Recobvery Strategie}
+Bei Karten mit komplexen, polygonen Hindernissen oder Sackgassen (siehe Szenario A) ist die Katze zum jetzigen Zeitpunkt nicht in der Lage darauf zu reagieren. Eine Recovery Strategie für Sackgassen fehlt komplett. Eine Strategie ließe sich mittels neuer Zustände oder äquivalent mit einer Verhaltensfusion integrieren. Für komplexe, polygone Hindernisse wäre ein Path Planning Ansatz vorteilhafter.
+\subsubsection{Sinusfunktion}
+Bei näherer Betrachtung der Funktion zur Berechnung der Kraft \ref{collision} bei der Kollisionsvermeidung fällt auf, dass bei Winkelwerten gegen 0 und gegen 2 $\pi$ die Funktion gegen 0 geht. Dies hat zur Folge, dass Objekte nahe der Fahrtrichtung wenig bis keine Abstoßungskraft haben.  Objekte die bei einem Winkel von $ \frac{2}{\pi}$ Rad und $3 \frac{\pi}{2} $   liegen haben dagegen die Maximale Abstoßungskraft(Extrempunkte).
+Lösen ließe sich dieses Problem durch die Streckung der Funktion in x-Richtung, damit die Extrempunkte bei 0 und $ \frac{2}{\pi}$ liegen.
+\subsection{Ausblick und Verbesserungen}
+Beim kraftbasierten Ansatz ergeben sich sehr viele Parameter. Die Optimierung dieser ist von elementarer Bedeutung für den Erfolg des Ansatzes.
+Die Parameter könnten mit Hilfe eines dafür konstruierten Neuronalen Netzes effektiver optimiert werden. Hierzu müsste jedoch eine eigene Simulation implementiert werden, da Gazebo hierfür zu langsam ist.\\
+Des Weiteren könnte bei der Implementierung  zur Vereinfachung der Zustandsautomat in eine Verhaltensfusion übertragen werden. Somit könnten die einzelnen Verhalten als eigenständige Ros nodes implementiert werden. Dadurch könnte man die Verhaltensweisen einzeln optimieren und situationsbedingt gewichten.
 %%%
 %%% end main document
 %%%
