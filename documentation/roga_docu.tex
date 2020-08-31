@@ -84,7 +84,7 @@ a4paper,     %% defines the paper size: a4paper (default), a5paper, letterpaper,
 %%% Note: if you don't use this package, please remove
 %%%       \pagestyle{scrheadings} and corresponding settings
 %%%       below too.
-\usepackage[automark]{scrpage2}
+\usepackage[automark]{scrlayer-scrpage}
 
 
 %%%
@@ -321,11 +321,11 @@ Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und W
 \subsubsection{Karten}
 Für das Projekt wurden seches Karten bereitgestellt. Drei für das Spiel und drei weitere Karten um Grenzfälle zu testen.  Die drei Grenzfallkarten wurden bei der Entwicklung nicht berücksichtigt daher werden sie im folgenden nicht behandelt.
 \mygraphics{0.5\textwidth}{Welt1.png}{Welt 1}
-Die erste Welt (\ref{fig:Welt1.png}) ist der stilistischen Sicht einer Schildkröte nachempfunden. Die Welt ist durch eine sechsseitige Mauer eingegrenzt Jede Ecke ist durch eine Säule abgerundet. In der Mitte der Welt befinden sich neun Säulen, die in einem Raster angeordnet sind. Der Käse ist an der gegenüberliegenden Seite zur Maus positioniert. Die Katze befindet nahe dem Käse leicht seitlich zwischen Maus und Käse.\\ \clearpage
+\noindent Die erste Welt (\ref{fig:Welt1.png}) ist der stilistischen Sicht einer Schildkröte nachempfunden. Die Welt ist durch eine sechsseitige Mauer eingegrenzt Jede Ecke ist durch eine Säule abgerundet. In der Mitte der Welt befinden sich neun Säulen, die in einem Raster angeordnet sind. Der Käse ist an der gegenüberliegenden Seite zur Maus positioniert. Die Katze befindet nahe dem Käse leicht seitlich zwischen Maus und Käse.\\ \clearpage
 \mygraphics{0.5\textwidth}{Welt2.png}{Welt 2}
-Die zweite Welt (\ref{fig:Welt2.png}) ist quadratisch eingemauert und besitzt vier Säulen in der Kartenmitte. Katze und Maus sind an gegenüberliegenden Ecken positioniert. Der Käse liegt in der Nähe der Maus allerdings blickt die Maus in entgegengesetzte Richtung.\\
+\noindent Die zweite Welt (\ref{fig:Welt2.png}) ist quadratisch eingemauert und besitzt vier Säulen in der Kartenmitte. Katze und Maus sind an gegenüberliegenden Ecken positioniert. Der Käse liegt in der Nähe der Maus allerdings blickt die Maus in entgegengesetzte Richtung.\\
 \mygraphics{0.5\textwidth}{Welt3.png}{Welt 3}
-In der dritten Welt (\ref{fig:Welt3.png}) befinden sich nur die Katze, die Maus und der Käse.
+\noindent In der dritten Welt (\ref{fig:Welt3.png}) befinden sich nur die Katze, die Maus und der Käse.
 Alle drei befinden sich auf einer Geraden.\clearpage
 \subsection{Mögliche Implementierungsmöglichkeiten}
 Im Laufe des Semester wurden verschiedene Methoden, das Verhalten des Roboters zu implementieren, in der Vorlesung vorgestellt.
@@ -365,13 +365,13 @@ c\_ch\_d := Katze-Käse Distanz \\
 \hline
 \end{tabular}}
 \mygraphics{0.7\textwidth}{stateMachine.png}{Zustandsautomat}
-Es gibt drei Kriterien die einen Zustandswechsel zur Folge haben. Das \glqq arrived\grqq{} Kriterium ist hierbei das einfachste und wird erreicht sobald ein gewisser Abstand zum Zielpunkt unterschritten wird.\\
+\noindent Es gibt drei Kriterien die einen Zustandswechsel zur Folge haben. Das \glqq arrived\grqq{} Kriterium ist hierbei das einfachste und wird erreicht sobald ein gewisser Abstand zum Zielpunkt unterschritten wird.\\
 Das zweite Kriterium \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{} besagt: sollte der Abstand zwischen Katze und Maus einen gewissen Wert $P_{1}$ unterschritten haben und zus"atzlich der Abstand zwischen K"ase und Maus einen weiteren Wert $P_{2}$ "uberschritten haben so wird der Zustand gewechselt. Umgangssprachlich ausgedr"uckt bedeutet es, sollte sich die Katze nah an der Maus befinden und die Maus aber noch weit genug vom K"ase weg sein so wird die Maus gejagt. Wobei der Parameter $P_{1}$ \glqq nah \grqq{} und der Parameter $P_{2}$ \glqq noch weit genug\grqq{} definiert. 
 $P_{1}$ und $P_{2}$ wurden empirisch festgelegt.\\
 Das dritte Kriterum \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{} bedeutet: ist der Abstand zwischen der Maus und dem Käse kleiner dem Abstand zwischen der Katze und dem Käse so erfolgt der Zustandswechsel. Hier wird ein Wert $P_{3}$ hinzugefügt der als Hysterese fungiert.\\
 Die Parameter $P_{1}$, $P_{2}$ und $P_{3}$ wurden empirisch festgelegt.\\
 \\\clearpage
-Im Zustand \glqq go to cheese\grqq{} löst das \glqq arrived\grqq{} Kriterium einen Wechsel in den Zustand \glqq go to mid\grqq{} aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqq go to mid\grqq{} den Wechsel in den Zustand \glqq hunt\grqq{} aus.
+\noindent Im Zustand \glqq go to cheese\grqq{} löst das \glqq arrived\grqq{} Kriterium einen Wechsel in den Zustand \glqq go to mid\grqq{} aus. Äquivalent dazu löst das gleiche Kriterium im Zustand \glqq go to mid\grqq{} den Wechsel in den Zustand \glqq hunt\grqq{} aus.
 Von beiden Zuständen, \glqq go to cheese\grqq{} und \glqq go to mid\grqq{}, findet ein Wechsel in den Zustand \glqq hunt\grqq{} statt, sollte das zweite Kriterium, \glqq$m\_c\_d < P_{1} \land  m\_ch\_d > P_{2} $\grqq{}, erfüllt sein. Im Zustand \glqq hunt\grqq{} greift das dritte Kriterium, \glqq $m\_c\_d + P_{3} < c\_ch\_d$\grqq{}, um den Wechsel in den Zustand \glqq go to cheese\grqq{} einzuleiten.
 \subsubsection{Zustand: \glqq hunt\grqq{}}
 \label{hunt}
@@ -379,10 +379,10 @@ Im Zustand \glqq hunt\grqq{} wird entschieden ob die Maus direkt als Ziel angefa
 Die Berechnung der Bewegung bezweckt eine sich vom Käse entfernende Schlingerbewegung der Maus (\ref{fig:ziel.png}).
 Dieser Ansatz fungiert als Gegenspieler zu einem kraftbasierten Ansatz der Maus.
 \mygraphics{0.6\textwidth}{ziel.png}{Schlingerbewegung}
-Um diese Verhalten zu erreichen wird die Bewegung der Maus verschieden weit vorausberechnet.
+\noindent Um diese Verhalten zu erreichen wird die Bewegung der Maus verschieden weit vorausberechnet.
 Im Zustand  hunt \grqq{} wird, bis zu einem gewissen Schwellwert, nicht direkt die Maus angefahren sondern ein vorausberechneter Punkt vor der Maus. Je näher die Katze der Maus kommt desto weiter steuert sie vor die Maus. Unterschreitet die Distanz zwischen Katze und Maus einen gewissen Schwellwert, so wird direkt die Maus als Ziel gesetzt.
 \clearpage
-Den Wert der Skalierung der Vorausberechnung wird r-Wert genannt. Er wird anhand einer Funktion berechnet.
+\noindent Den Wert der Skalierung der Vorausberechnung wird r-Wert genannt. Er wird anhand einer Funktion berechnet.
 Gegeben aus den Anforderungen benötigt besagte Funktion eine sägezahnähnliche Form.\\
 Hierzu wurde die Funktion $r= \frac{2}{x} - \frac{2}{x^3}$
 gewählt mit $x := Distanz(Maus,Katze)$  (\ref{fig:huntFunction.png}).
@@ -413,7 +413,7 @@ Folgende Funktion erfüllt die aufgestellten Kriterien und weist die gewünschte
 \[ Force= -\sin(sensor.angular) * (rel\_range-sensor.range) \]
 \mygraphics{0.7\textwidth}{Kollision.png}{Funktion
 Collison Avoidance}
-Die negative Sinusfunktion wird hier als Grundgerüst genommen, sa sich sensor.angle zwischen 0 und $2\pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirken hingegen eine Linksdrehung. Die so entstehende winkelabhängige Kraft wird  nun mit der Distanz multipliziert, von der vorher von der Maximaldistanz abgezogen wird. Somit ist der Multiplikator größer, je kleiner die Distanz ist.
+\noindent Die negative Sinusfunktion wird hier als Grundgerüst genommen, sa sich sensor.angle zwischen 0 und $2\pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirken hingegen eine Linksdrehung. Die so entstehende winkelabhängige Kraft wird  nun mit der Distanz multipliziert, von der vorher von der Maximaldistanz abgezogen wird. Somit ist der Multiplikator größer, je kleiner die Distanz ist.
 \subsubsection{Sonderfälle}
 Die Maus wird von den Sensoren erfasst und muss daher aus der Kollisionsvermeidung herausgerechnet werden.\\
 Um dieses Problem zu lösen wurde ein Spezialfall entwickelt.
@@ -432,7 +432,7 @@ Zuerst wird der angle\_mouse berechnet dies ist der Winkel aus Sicht der Katze z
 Angle\_mouse gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt:
 \[ laserMouse\_middle  =  \vert \frac{ (angle\_mouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
 \mygraphics{0.5\textwidth}{collisionANGLE2.png}{Sensorwinkel Katze}
-Nachdem der Sensorwinkel zu Mitte der Maus berechnet wurde, wird mit Hilfe des Radiuses(mouse\_radius) der Maus die Außenwinkel berechnet.
+\noindent Nachdem der Sensorwinkel zu Mitte der Maus berechnet wurde, wird mit Hilfe des Radiuses(mouse\_radius) der Maus die Außenwinkel berechnet.
 \[
 laserMous\_border =  \vert { \tan( \frac{mouse\_radius}{\Delta cat\_mouse} ) } / angle\_increment \vert  * angle\_increment \]
 \hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
@@ -443,9 +443,9 @@ Rot := $\Delta cat\_mouse$ \\
 \hline
 \end{tabular}}
 \mygraphics{0.5\textwidth}{catmous.png}{Beziehungen Katze zu Maus}
-Nachdem berechnet wurde welche sensor.angle-Werte momentan die Maus scannen, werden alle Sensor.range-Werte dieser Winkel auf Infinity gesetzt. Nachdem alle relevanten Werte des     Sensors auf Infinity gesetzt sind, ist die Maus für die Kollisionsvermeidung unsichtbar und die Katze sieht die Maus nicht als Hindernis an, welche ihre Fahrtrichtung beeinflusst.\\
+\noindent Nachdem berechnet wurde welche sensor.angle-Werte momentan die Maus scannen, werden alle Sensor.range-Werte dieser Winkel auf Infinity gesetzt. Nachdem alle relevanten Werte des     Sensors auf Infinity gesetzt sind, ist die Maus für die Kollisionsvermeidung unsichtbar und die Katze sieht die Maus nicht als Hindernis an, welche ihre Fahrtrichtung beeinflusst.\\
 \mygraphics{0.5\textwidth}{collisionMOUS.png}{Lasersensor ignorieren }
-Ein weiterer Spezialfall ist der Käse. Er ist zu niedrig um vom Lasersensor erfasst zu werden.
+\noindent Ein weiterer Spezialfall ist der Käse. Er ist zu niedrig um vom Lasersensor erfasst zu werden.
 \paragraph{Strategie:}
 \begin{enumerate}
 \item Käse ist in Scanreichweite
@@ -465,7 +465,7 @@ Lilia := $sensor.range_i$ \\
 \hline
 \end{tabular}}
 \mygraphics{0.5\textwidth}{catcheese.png}{Überblick Katze Käse}
-Nachdem alle Werte berechnet sind kann die normale Kollisionsvermeidung durchgeführt werden. Die Katze registriert nun dort wo sich der Käse befindet einen Halbkreis und weicht diesem Objekt aus. 
+\noindent Nachdem alle Werte berechnet sind kann die normale Kollisionsvermeidung durchgeführt werden. Die Katze registriert nun dort wo sich der Käse befindet einen Halbkreis und weicht diesem Objekt aus. 
 Es wird der Katze eine Säule an der Position des Käse vorgetäuscht.
 \mygraphics{0.5\textwidth}{collisionCHEESE.png}{Käse als Hindernis Simuliert}\clearpage
 \section{Diskussion und Ausblick}
