@@ -380,7 +380,7 @@ Die Berechnung der Bewegung bezweckt eine sich vom Käse entfernende Schlingerbe
 Dieser Ansatz fungiert als Gegenspieler zu einem kraftbasierten Ansatz der Maus.
 \mygraphics{0.6\textwidth}{ziel.png}{Schlingerbewegung}
 \noindent Um diese Verhalten zu erreichen wird die Bewegung der Maus verschieden weit vorausberechnet.
-Im Zustand  hunt \grqq{} wird, bis zu einem gewissen Schwellwert, nicht direkt die Maus angefahren sondern ein vorausberechneter Punkt vor der Maus. Je näher die Katze der Maus kommt desto weiter steuert sie vor die Maus. Unterschreitet die Distanz zwischen Katze und Maus einen gewissen Schwellwert, so wird direkt die Maus als Ziel gesetzt.
+Im Zustand  \glqq hunt \grqq{} wird, bis zu einem gewissen Schwellwert, nicht direkt die Maus angefahren sondern ein vorausberechneter Punkt vor der Maus. Je näher die Katze der Maus kommt, desto weiter steuert sie vor die Maus. Unterschreitet die Distanz zwischen Katze und Maus einen gewissen Schwellwert, so wird direkt die Maus als Ziel gesetzt.
 \clearpage
 \noindent Den Wert der Skalierung der Vorausberechnung wird r-Wert genannt. Er wird anhand einer Funktion berechnet.
 Gegeben aus den Anforderungen benötigt besagte Funktion eine sägezahnähnliche Form.\\
@@ -394,7 +394,7 @@ Bei der Kollisionsvermeidung werden nicht alle 360 Sensorwerte berücksichtigt. 
 \label{collision}
 Folgende Kriterien sind für die Funktion der Kollisionsvermeidung wichtig.
 \begin{itemize}
-\item Je geringer die Distanz zu einem Objekt \footnote {sensor.range} desto größe die Kraft
+\item Je geringer die Distanz zu einem Objekt \footnote {sensor.range} desto größer die Kraft
 \item Je geringer der Winkel eines Objekts zur Katze, desto größer deren Kraft \footnote{Ein Objekt in Fahrtrichtung soll eine größere Kraft haben als ein Objekt welches sich Seitlich befindet}
 \end{itemize}
 Nun ist ein genauer Blick auf die Wertebereiche der relevanten Variablen nötig.\\
@@ -413,7 +413,7 @@ Folgende Funktion erfüllt die aufgestellten Kriterien und weist die gewünschte
 \[ Force= -\sin(sensor.angular) * (rel\_range-sensor.range) \]
 \mygraphics{0.7\textwidth}{Kollision.png}{Funktion
 Collison Avoidance}
-\noindent Die negative Sinusfunktion wird hier als Grundgerüst genommen, sa sich sensor.angle zwischen 0 und $2\pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirken hingegen eine Linksdrehung. Die so entstehende winkelabhängige Kraft wird  nun mit der Distanz multipliziert, von der vorher von der Maximaldistanz abgezogen wird. Somit ist der Multiplikator größer, je kleiner die Distanz ist.
+\noindent Die negative Sinusfunktion wird hier als Grundgerüst genommen, da sich sensor.angle zwischen 0 und $2\pi$ bewegt. Werte nahe der 0 führen zu einer negativen Kraft und bewirken somit eine Rechtsdrehung. Werte nahe $2\pi $ bewirken hingegen eine Linksdrehung. Die so entstehende winkelabhängige Kraft wird  nun mit der Distanz multipliziert, von der vorher die Maximaldistanz abgezogen wird. Somit ist der Multiplikator größer, je kleiner die Distanz ist.
 \subsubsection{Sonderfälle}
 Die Maus wird von den Sensoren erfasst und muss daher aus der Kollisionsvermeidung herausgerechnet werden.\\
 Um dieses Problem zu lösen wurde ein Spezialfall entwickelt.
@@ -422,23 +422,23 @@ Ziel ist es alle Sensorwerte, die die Maus erfassen zu bestimmen und diese in de
 \begin{enumerate}
 \item Maus ist in Scanreichweite
 \item Gescannte Range entspricht der Entfernung zur Maus
-\item Relevante Winkle in Bezug auf die Größe der Maus berechnen
+\item Relevante Winkel in Bezug auf die Größe der Maus berechnen
 \item Alle sensor.range-Werte der relevanten Winkel auf Infinity setzen
 \end{enumerate}
 Sobald die Maus in Sensorreichweite ist, ist es wichtig zu überprüfen ob die Sensor.range der mathematischen Distanz zur Maus entspricht. Falls man dies nicht überprüft kann es passieren, dass sich ein Hindernis zwischen Maus und Katze befinden. Das Hindernis wird von dem Algorithmus als Maus tituliert und für die Kollisionsvermeidung nicht berücksichtigt. Dies hat zur Folge, dass die Katze in das Hindernis hineinfährt.\\
 Sofern diese Fälle berücksichtigt worden sind, kann es daran gehen die relevanten Sensorwerten zu löschen, dies bedeutet sie auf Infinity zu setzen. \\
-Zuerst wird der angle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus, mit den globalen Positionsangabne\footnote{Positionen der Maus in odom Sysem}.
+Zuerst wird der angle\_mouse berechnet dies ist der Winkel aus Sicht der Katze zur Maus, mit den globalen Positionsangaben\footnote{Positionen der Maus in odom Sysem}.
 \[ angle\_mouse=\tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
 Angle\_mouse gibt den Winkel der Maus zur Basis der Katze an, nun wird berechnet welcher Sensorwinkel auf die Mitte der Maus zeigt:
 \[ laserMouse\_middle  =  \vert \frac{ (angle\_mouse + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
 \mygraphics{0.5\textwidth}{collisionANGLE2.png}{Sensorwinkel Katze}
-\noindent Nachdem der Sensorwinkel zu Mitte der Maus berechnet wurde, wird mit Hilfe des Radiuses(mouse\_radius) der Maus die Außenwinkel berechnet.
+\noindent Nachdem der Sensorwinkel zur  Mitte der Maus berechnet wurde, wird mit Hilfe des Radius(mouse\_radius) der Maus die Außenwinkel berechnet.
 \[
 laserMous\_border =  \vert { \tan( \frac{mouse\_radius}{\Delta cat\_mouse} ) } / angle\_increment \vert  * angle\_increment \]
 \hspace*{0.63\textwidth}\scalebox{0.7}{\begin{tabular}[h]{|c|}
 \hline
 Winkel zwischen Rot \& Lila:= $\tan( \frac{mouse\_radius}{\Delta cat\_mouse} )$ \\
-Blau := mouse\_radiu s\\
+Blau := mouse\_radius\\
 Rot := $\Delta cat\_mouse$ \\
 \hline
 \end{tabular}}
@@ -449,10 +449,10 @@ Rot := $\Delta cat\_mouse$ \\
 \paragraph{Strategie:}
 \begin{enumerate}
 \item Käse ist in Scanreichweite
-\item Relevante Winkle in Bezug auf die Größe und Position des Käses berechnen
+\item Relevante Winkel in Bezug auf die Größe und Position des Käses berechnen
 \item Alle sensor.range-Werte der relevanten Winkel Werte zuweisen
 \end{enumerate}
-Mit dem Globalen Koordinaten wird überprüft ob der Käse theoretisch in Sensorreichweite ist. Parallel zum Vorgehen bei der Maus wird der Winkel vom Käse zur Katze und der Sensorwinkle zur Mitte des Käses berechnet.
+Mit demnglobalen Koordinaten wird überprüft ob der Käse theoretisch in Sensorreichweite ist. Parallel zum Vorgehen bei der Maus wird der Winkel vom Käse zur Katze und der Sensorwinkel zur Mitte des Käses berechnet.
 \[ angle\_cheese=\tan( \frac{\Delta x}{\Delta y} ) -cat\_phi \]
 \[ laserMouse\_cheese  =  \vert \frac{ (angle\_cheese + 2  \pi) \% (2 \pi)}{angle\_increment}  \vert * angle\_increment \]
 Nachdem berechnet wurde wo der Käse sich befindet, werden mithilfe der Kreisfunktion die sensor.range-Werte berechnet und gesetzt. $ sensor.range=\sqrt[]{ rad^2 -x^2 }$
@@ -461,13 +461,13 @@ Nachdem berechnet wurde wo der Käse sich befindet, werden mithilfe der Kreisfun
 \hline
 Blau := $\frac{\tan( laser\_cheesMiddl - angle_i) }{\Delta cheese}$ \\
 Rot := $\Delta cat\_cheese$ \\
-Lilia := $sensor.range_i$ \\
+Lila := $sensor.range_i$ \\
 \hline
 \end{tabular}}
 \mygraphics{0.5\textwidth}{catcheese.png}{Überblick Katze Käse}
 \noindent Nachdem alle Werte berechnet sind kann die normale Kollisionsvermeidung durchgeführt werden. Die Katze registriert nun dort wo sich der Käse befindet einen Halbkreis und weicht diesem Objekt aus. 
-Es wird der Katze eine Säule an der Position des Käse vorgetäuscht.
-\mygraphics{0.5\textwidth}{collisionCHEESE.png}{Käse als Hindernis Simuliert}\clearpage
+Es wird der Katze eine Säule an der Position des Käses vorgetäuscht.
+\mygraphics{0.5\textwidth}{collisionCHEESE.png}{Käse als Hindernis simuliert}\clearpage
 \section{Diskussion und Ausblick}
 \subsection{Bewertung}
 Der kraftbasierte Ansatz erweist sich nach der Auswertung auf den Welten eins bis drei als praktikabel. Durch seinen rein reaktiven Charakter ist er weniger rechenintensiv als pfadplanende Ansätze. 
