@@ -302,7 +302,7 @@ In diesem Projekt wurde die Rolle der Katze übernommen.
 
 \subsection{Anforderungen}
 Bei den verwendeten Robotern handelt es sich jeweils um einen Turtlebot3 Burger.\\ 
-Dieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindgkeit von 2.84 rad/s. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
+Dieser Roboter hat eine maximale Lineargeschwindigkeit von 0.22 m/s und eine maximale Winkelgeschwindigkeit von 2.84 rad/s. \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/\#hardware-specifications}}\\
 Die Drehung des Roboters wird durch einen Radianten \footnote {Wertebereich [0:2 $\pi$]} angegeben. Ein positiver Wert führt zu einer Drehung gegen den Uhrzeigersinn, dementsprechend führt ein negativer Wert zu einer Drehung in Uhrzeigersinn.
 Um Hindernisse zu erkennen, besitzt er einen Laserscanner mit einer Scanreichweite von 120 bis 3500 mm und einer Auflösung von 1 Grad. \footnote {1 Gard ~ 0,0174533} \footnote{\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_01/}} 
 \\\\
@@ -321,16 +321,16 @@ Für das Spiel gibt es jedoch Restriktionen der Roboter bezüglich Linear- und W
 \subsubsection{Karten}
 Für das Projekt wurden seches Karten bereitgestellt. Drei für das Spiel und drei weitere Karten um Grenzfälle zu testen.  Die drei Grenzfallkarten wurden bei der Entwicklung nicht berücksichtigt daher werden sie im folgenden nicht behandelt.
 \mygraphics{0.5\textwidth}{Welt1.png}{Welt 1}
-\noindent Die erste Welt (\ref{fig:Welt1.png}) ist der stilistischen Sicht einer Schildkröte nachempfunden. Die Welt ist durch eine sechsseitige Mauer eingegrenzt Jede Ecke ist durch eine Säule abgerundet. In der Mitte der Welt befinden sich neun Säulen, die in einem Raster angeordnet sind. Der Käse ist an der gegenüberliegenden Seite zur Maus positioniert. Die Katze befindet nahe dem Käse leicht seitlich zwischen Maus und Käse.\\ \clearpage
+\noindent Die erste Welt (\ref{fig:Welt1.png}) ist der stilistischen Sicht einer Schildkröte nachempfunden. Die Welt ist durch eine sechsseitige Mauer eingegrenzt. Jede Ecke ist durch eine Säule abgerundet. In der Mitte der Welt befinden sich neun Säulen, die in einem Raster angeordnet sind. Der Käse ist an der gegenüberliegenden Seite zur Maus positioniert. Die Katze befindet nahe dem Käse leicht seitlich zwischen Maus und Käse.\\ \clearpage
 \mygraphics{0.5\textwidth}{Welt2.png}{Welt 2}
-\noindent Die zweite Welt (\ref{fig:Welt2.png}) ist quadratisch eingemauert und besitzt vier Säulen in der Kartenmitte. Katze und Maus sind an gegenüberliegenden Ecken positioniert. Der Käse liegt in der Nähe der Maus allerdings blickt die Maus in entgegengesetzte Richtung.\\
+\noindent Die zweite Welt (\ref{fig:Welt2.png}) ist quadratisch eingemauert und besitzt vier Säulen in der Kartenmitte. Katze und Maus sind an gegenüberliegenden Ecken positioniert. Der Käse liegt in der Nähe der Maus, diese blickt jedoch in die entgegengesetzte Richtung.\\
 \mygraphics{0.5\textwidth}{Welt3.png}{Welt 3}
 \noindent In der dritten Welt (\ref{fig:Welt3.png}) befinden sich nur die Katze, die Maus und der Käse.
 Alle drei befinden sich auf einer Geraden.\clearpage
 \subsection{Mögliche Implementierungsmöglichkeiten}
 Im Laufe des Semester wurden verschiedene Methoden, das Verhalten des Roboters zu implementieren, in der Vorlesung vorgestellt.
 \subsubsection{Kraftbasierte Kollisionsvermeidung und Homing}
-Bei diesen Verfahren wird bei der Kollisionsvermeidung eine Kraft berechnet, die von den Hindernissen auf den Roboter wirken. Je näher der Roboter an einem Hindernis ist, desto mehr wird er von diesem  abstoßen. Beim Homing erfährt der Roboter eine Anziehungskraft auf einen Punkt im Spielfeld. Durch das Aufaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich die endgültige Kraft, die den Roboter von Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt.
+Bei diesen Verfahren wird bei der Kollisionsvermeidung eine Kraft berechnet, die von den Hindernissen auf den Roboter wirken. Je näher der Roboter an einem Hindernis ist, desto mehr wird er von diesem  abgestoßen. Beim Homing erfährt der Roboter eine Anziehungskraft auf einen Punkt im Spielfeld. Durch das Aufaddieren beider Kräfte, dem Homing und der Kollisionsvermeidung, ergibt sich die endgültige Kraft, die den Roboter von Hindernissen abstößt ihn jedoch gleichzeitig immer näher zum Ziel treibt.
 \subsubsection{Sense Plan Act}
 Hier wird für jede Folge von möglichen Zuständen der maximale Nutzen berechnet, der Roboter arbeitet somit vorausschauend. Dabei entsteht ein Suchbaum. Dieser Suchbaum kann mit dem MinMax-Algorithmus optimiert werden.
 \subsubsection{Optimal Control}
@@ -342,7 +342,7 @@ Im Rahmen dieses Projekts wird ein kraftbasierter Ansatz implementiert. Im Laufe
 \clearpage
 \section{Konzept}
 \subsection{Grundverhalten}
-Die Katze hat zwei wesentliche Grundbestandteile. Sie kann ,auf einen gegebenen Punkt,  \glqq homen\grqq{} und sie besitzt eine Kollisionsvermeidung.
+Die Katze hat zwei wesentliche Grundbestandteile. Sie kann auf einen gegebenen Punkt  \glqq homen\grqq{} und sie besitzt eine Kollisionsvermeidung.
 \subsection{Homing}
 \subsubsection{Ziele}
 F"ur das Homing gibt es vier verschiedene Ziele (\ref{fig:homingZiele.png}). 
